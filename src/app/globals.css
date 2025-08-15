@@ -1,26 +1,65 @@
 @import "tailwindcss";
 
+ 
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  --bg: #ededed;
+  --bg2: #e4e4e4;
+  --fg: #0a0a0a;
+  --fg2: #0f0f0f;
+  --prim: #009be2;
+  --primd: #0086c4;
+  --priml: #00aeff;
+  --sec: #f6ee1c;
+} 
+@theme {
+  --color-prim: var(--prim);
+  --color-primd: var(--primd);
+  --color-priml: var(--priml);
+  --color-sec: var(--sec);
+  --color-bg: var(--bg);
+  --color-bg2: var(--bg2);
+  --color-fg: var(--fg);
+  --color-fg2: var(--fg2);
 }
 
 @theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
+  --color-background: var(--bg);
+  --color-foreground: var(--fg);
   --font-sans: var(--font-geist-sans);
   --font-mono: var(--font-geist-mono);
 }
 
 @media (prefers-color-scheme: dark) {
   :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
+    --bg: #0a0a0a;
+    --bg2: #111111;
+    --fg: #ededed;
+    --fg2: #e4e4e4;
   }
 }
 
 body {
-  background: var(--background);
-  color: var(--foreground);
+  background: var(--bg);
+  color: var(--fg);
   font-family: Arial, Helvetica, sans-serif;
+  font-style: normal;
+}
+
+  .font-outline-2 {
+    -webkit-text-stroke: 2px var(--prim);
+  }
+
+.striped-background {
+    background: repeating-linear-gradient(
+  45deg,
+  var(--bg),
+  var(--bg) 16px,
+  var(--bg2) 15px,
+  var(--bg2) 30px
+);
+  }
+
+.container {
+  @media (width >= 112rem) { max-width: 112rem; }
+  @media (width >= 128rem) { max-width: 128rem; }
 }

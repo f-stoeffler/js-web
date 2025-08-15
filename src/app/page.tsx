@@ -1,102 +1,98 @@
+import NavbarItem from "@/comps/NavbarItem";
+import SkillItem from "@/comps/SkillItem";
+import useDragScroll from "@/comps/useDragScroll";
+import WorkItem from "@/comps/WorkItem";
+import Works from "@/comps/Works";
 import Image from "next/image";
 
 export default function Home() {
   return (
-    <div className="font-sans grid grid-rows-[20px_1fr_20px] items-center justify-items-center min-h-screen p-8 pb-20 gap-16 sm:p-20">
-      <main className="flex flex-col gap-[32px] row-start-2 items-center sm:items-start">
-        <Image
-          className="dark:invert"
-          src="/next.svg"
-          alt="Next.js logo"
-          width={180}
-          height={38}
-          priority
-        />
-        <ol className="font-mono list-inside list-decimal text-sm/6 text-center sm:text-left">
-          <li className="mb-2 tracking-[-.01em]">
-            Get started by editing{" "}
-            <code className="bg-black/[.05] dark:bg-white/[.06] font-mono font-semibold px-1 py-0.5 rounded">
-              src/app/page.tsx
-            </code>
-            .
-          </li>
-          <li className="tracking-[-.01em]">
-            Save and see your changes instantly.
-          </li>
-        </ol>
-
-        <div className="flex gap-4 items-center flex-col sm:flex-row">
-          <a
-            className="rounded-full border border-solid border-transparent transition-colors flex items-center justify-center bg-foreground text-background gap-2 hover:bg-[#383838] dark:hover:bg-[#ccc] font-medium text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5 sm:w-auto"
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <Image
-              className="dark:invert"
-              src="/vercel.svg"
-              alt="Vercel logomark"
-              width={20}
-              height={20}
-            />
-            Deploy now
-          </a>
-          <a
-            className="rounded-full border border-solid border-black/[.08] dark:border-white/[.145] transition-colors flex items-center justify-center hover:bg-[#f2f2f2] dark:hover:bg-[#1a1a1a] hover:border-transparent font-medium text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5 w-full sm:w-auto md:w-[158px]"
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Read our docs
-          </a>
+    <div className="">
+      <div className="h-svh  flex flex-col">
+        <div className="w-full shadow-md border-b-2 border-prim">
+          <div className="container mx-auto">
+            <div className="flex h-16 mx-6">
+              <div className=" font-black flex items-center">
+                <Image src="/showtech.png" width={300} height={80} alt="Logo" />
+              </div>
+              <div className="flex justify-end h-full w-full">
+                <NavbarItem url="/gugu">Leistungen</NavbarItem>
+                <NavbarItem url="/gaga">Kontakt</NavbarItem>
+                <NavbarItem url="/gaga">Preise</NavbarItem>
+                <NavbarItem url="/gugu">Musik</NavbarItem>
+              </div>
+            </div>
+          </div>
         </div>
+        <div className="flex-grow striped-background border-b-2 border-prim">
+          <div className="container mx-auto h-full flex items-center">
+            <div className="mx-6 w-full">
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-8 w-full">
+                <div className="flex items-center mx-auto">
+                  <div className="gap-4 grid grid-cols-1">
+                    <h1 className="font-bold text-5xl text-center">
+                      Guter Sound? Kein Zufall!
+                    </h1>
+                    <p className="text-center text-lg">
+                      Staatlich geprüfter Veranstaltungstechniker für Bühnen in
+                      Villach und ganz Kärnten seit über 100 Jahren
+                    </p>
+                    <button className="rounded-lg border-2 border-prim text-xl py-2 text-prim hover:bg-prim hover:text-fg transition-all cursor-pointer">
+                      Jetzt anfragen!
+                    </button>
+                  </div>
+                </div>
+                <div>
+                  <Image
+                    src="/js.jpg"
+                    height={1300}
+                    width={1300}
+                    className="rounded-xl w-full"
+                    alt="flowers"
+                  />
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <main>
+        <div className="container mx-auto px-6">
+          <div className="grid grid-cols-3 gap-8 mb-20 items-start">
+            <SkillItem title="Lichttechnik">
+              Lichttechnik oder Beleuchtungstechnik bezeichnet alle technischen
+              Maßnahmen, die dazu dienen, Lichtverhältnisse zu beeinflussen.{" "}
+            </SkillItem>
+            <SkillItem title="Tontechnik">
+              Tontechnik ist der Oberbegriff für technische Geräte, die der
+              Umwandlung, Bearbeitung, Aufzeichnung (Speicherung) und Wiedergabe
+              von akustischen Ereignissen
+            </SkillItem>
+            <SkillItem title="Julius Stöffler">
+              Nicht immer stellt uns das zufrieden, was uns technisch ermöglicht
+              wird. Häufig überfordert es uns.{" "}
+            </SkillItem>
+          </div>
+          <div className="">
+            <div className="text-center mb-8">
+              <h1 className="font-bold text-5xl mb-2">Leistungen</h1>
+              <p>
+                Lorem ipsum dolor, sit amet consectetur adipisicing elit.
+                Reiciendis molestiae dolorum minima? Facere doloribus id
+                delectus dolorem reiciendis illo quidem. Ea dolor tenetur
+                placeat incidunt ipsam, ducimus libero natus repellendus. Lorem
+                ipsum dolor sit amet, consectetur adipisicing elit. Provident
+                voluptas vero similique enim. Ducimus ratione ex ipsam officia
+                dolores amet, impedit maxime autem iusto ut expedita? Cum vitae
+                minima ut.
+              </p>
+            </div>
+          </div>
+        </div>{" "}
+        <Works />
       </main>
-      <footer className="row-start-3 flex gap-[24px] flex-wrap items-center justify-center">
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/file.svg"
-            alt="File icon"
-            width={16}
-            height={16}
-          />
-          Learn
-        </a>
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/window.svg"
-            alt="Window icon"
-            width={16}
-            height={16}
-          />
-          Examples
-        </a>
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://nextjs.org?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/globe.svg"
-            alt="Globe icon"
-            width={16}
-            height={16}
-          />
-          Go to nextjs.org →
-        </a>
+      <footer className="border-t-2 border-prim text-center pt-4 pb-4 mt-12 bg-bg2">
+        What the GIM
       </footer>
     </div>
   );
