@@ -1,7 +1,7 @@
 import Link from "next/link";
 
 
-export default function SkillItem({
+export default function SkillItemComp({
   children,
   title,
 }: Readonly<{

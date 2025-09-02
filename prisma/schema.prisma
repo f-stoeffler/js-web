@@ -1,0 +1,82 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+  output   = "../generated/prisma"
+}
+
+datasource db {
+  provider = "sqlite"
+  url      = env("DATABASE_URL")
+}
+
+model FrontPage {
+  pagePart        String @id @default("FrontPage")
+  title           String
+  desc            String
+  btnText         String
+  featuredImages  featuredImage[]
+}
+
+model featuredImage {
+  id              Int @id @default(autoincrement())
+  title           String
+  desc            String
+  imgPath         String
+  parent          String @default("FrontPage")
+  parentRelation  FrontPage @relation(fields: [parent], references: [pagePart])
+}
+
+model Skills {
+  pagePart    String @id @default("Skills")
+  skillItems  SkillItem[]
+}
+
+model SkillItem {
+  id              Int @id @default(autoincrement())
+  title           String
+  desc            String
+  parent          String @default("Skills")
+  parentRelation  Skills @relation(fields: [parent], references: [pagePart])
+}
+
+model Achievements {
+  pagePart  String @id @default("Achievements")
+  title     String
+  desc      String
+  reviews   Review[]
+}
+
+model Review {
+  id              Int @id @default(autoincrement())
+  title           String
+  desc            String
+  parent          String @default("Achievements")
+  parentRelation  Achievements @relation(fields: [parent], references: [pagePart])
+}
+
+model Projects {
+  pagePart  String @id @default("Projects")
+  title     String
+  desc      String
+  projects  Project[]
+}
+
+model Project {
+  id              Int @id @default(autoincrement())
+  featured        Boolean
+  title           String
+  shortDesc       String
+  desc            String
+  parent          String @default("Projects")
+  parentRelation  Projects @relation(fields: [parent], references: [pagePart])
+  images          ProjectImage[]
+}
+
+model ProjectImage {
+  id              Int @id @default(autoincrement())
+  imgPath         String
+  parentId        Int
+  parentRelation  Project @relation(fields: [parentId], references: [id])
+}

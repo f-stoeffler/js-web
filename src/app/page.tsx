@@ -1,11 +1,20 @@
+"use server";
+import FeaturedSlide from "@/comps/FeaturedSlide";
 import NavbarItem from "@/comps/NavbarItem";
-import SkillItem from "@/comps/SkillItem";
-import useDragScroll from "@/comps/useDragScroll";
-import WorkItem from "@/comps/WorkItem";
-import Works from "@/comps/Works";
+import Project from "@/comps/Project";
+import SkillItemComp from "@/comps/SkillItem";
+import Skills from "@/comps/Skills";
+import Reviews from "@/comps/Reviews";
+import { getFrontPage } from "@/repo/frontPage";
+import { getAchievements } from "@/repo/reviews";
+import { getSkills } from "@/repo/skills";
 import Image from "next/image";
 
-export default function Home() {
+export default async function Home() {
+  const frontPage = await getFrontPage("FrontPage");
+  const skills = await getSkills("Skills");
+  const achievements = await getAchievements("Achievements");
+  console.log(frontPage);
   return (
     <div className="">
       <div className="h-svh  flex flex-col">
@@ -31,25 +40,16 @@ export default function Home() {
                 <div className="flex items-center mx-auto">
                   <div className="gap-4 grid grid-cols-1">
                     <h1 className="font-bold text-5xl text-center">
-                      Guter Sound? Kein Zufall!
+                      {frontPage?.title}
                     </h1>
-                    <p className="text-center text-lg">
-                      Staatlich geprüfter Veranstaltungstechniker für Bühnen in
-                      Villach und ganz Kärnten seit über 100 Jahren
-                    </p>
+                    <p className="text-center text-lg">{frontPage?.desc}</p>
                     <button className="rounded-lg border-2 border-prim text-xl py-2 text-prim hover:bg-prim hover:text-fg transition-all cursor-pointer">
-                      Jetzt anfragen!
+                      {frontPage?.btnText}
                     </button>
                   </div>
                 </div>
                 <div>
-                  <Image
-                    src="/js.jpg"
-                    height={1300}
-                    width={1300}
-                    className="rounded-xl w-full"
-                    alt="flowers"
-                  />
+                  <FeaturedSlide imgs={frontPage?.featuredImages} />
                 </div>
               </div>
             </div>
@@ -57,39 +57,43 @@ export default function Home() {
         </div>
       </div>
       <main>
-        <div className="container mx-auto px-6">
-          <div className="grid grid-cols-3 gap-8 mb-20 items-start">
-            <SkillItem title="Lichttechnik">
-              Lichttechnik oder Beleuchtungstechnik bezeichnet alle technischen
-              Maßnahmen, die dazu dienen, Lichtverhältnisse zu beeinflussen.{" "}
-            </SkillItem>
-            <SkillItem title="Tontechnik">
-              Tontechnik ist der Oberbegriff für technische Geräte, die der
-              Umwandlung, Bearbeitung, Aufzeichnung (Speicherung) und Wiedergabe
-              von akustischen Ereignissen
-            </SkillItem>
-            <SkillItem title="Julius Stöffler">
-              Nicht immer stellt uns das zufrieden, was uns technisch ermöglicht
-              wird. Häufig überfordert es uns.{" "}
-            </SkillItem>
+        <div>
+          <div className="container mx-auto px-6">
+            <Skills skills={skills?.skillItems} />
           </div>
-          <div className="">
-            <div className="text-center mb-8">
-              <h1 className="font-bold text-5xl mb-2">Leistungen</h1>
-              <p>
-                Lorem ipsum dolor, sit amet consectetur adipisicing elit.
-                Reiciendis molestiae dolorum minima? Facere doloribus id
-                delectus dolorem reiciendis illo quidem. Ea dolor tenetur
-                placeat incidunt ipsam, ducimus libero natus repellendus. Lorem
-                ipsum dolor sit amet, consectetur adipisicing elit. Provident
-                voluptas vero similique enim. Ducimus ratione ex ipsam officia
-                dolores amet, impedit maxime autem iusto ut expedita? Cum vitae
-                minima ut.
-              </p>
+          <div className="bg-bg2 py-6 mt-20 border-y-2 border-prim">
+            <div className=" container mx-auto px-6">
+              <div className="">
+                <div className="text-center mb-8">
+                  <h1 className="font-bold text-5xl mb-2">
+                    {achievements?.title}
+                  </h1>
+                  <p>{achievements?.desc}</p>
+                </div>
+              </div>
             </div>
+            <Reviews reviews={achievements?.reviews} />
           </div>
         </div>{" "}
-        <Works />
+        <div className="container mx-auto px-6 mt-18">
+          <div className="">
+            <div className="text-center mb-8">
+              <h1 className="font-bold text-5xl mb-2">Portfolio</h1>
+              <p>{achievements?.desc}</p>
+            </div>
+          </div>
+          <div className="grid grid-cols-3 gap-8 mb-20 items-start">
+            <Project title={"testi"} img="project1.jpg">
+              testi
+            </Project>
+            <Project title={"testi"} img="project2.jpg">
+              testi
+            </Project>
+            <Project title={"testi"} img="project3.webp">
+              testi
+            </Project>
+          </div>
+        </div>
       </main>
       <footer className="border-t-2 border-prim text-center pt-4 pb-4 mt-12 bg-bg2">
         What the GIM
