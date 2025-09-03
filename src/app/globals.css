@@ -22,6 +22,8 @@
   --color-fg2: var(--fg2);
 }
 
+@custom-variant hover (&:hover);
+
 @theme inline {
   --color-background: var(--bg);
   --color-foreground: var(--fg);
@@ -32,7 +34,7 @@
 @media (prefers-color-scheme: dark) {
   :root {
     --bg: #0a0a0a;
-    --bg2: #111111;
+    --bg2: #141414;
     --fg: #ededed;
     --fg2: #e4e4e4;
   }
@@ -67,3 +69,8 @@ body {
 
 
 
+.swiper-slide {
+  background-size: contain;
+  background-repeat: no-repeat;
+  background-position: center;
+}

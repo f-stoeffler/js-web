@@ -64,8 +64,9 @@ model Projects {
 }
 
 model Project {
-  id              Int @id @default(autoincrement())
+  slug            String @id
   featured        Boolean
+  mainImage       String
   title           String
   shortDesc       String
   desc            String
@@ -75,8 +76,10 @@ model Project {
 }
 
 model ProjectImage {
-  id              Int @id @default(autoincrement())
+  id              Int
+  parentSlug      String
   imgPath         String
-  parentId        Int
-  parentRelation  Project @relation(fields: [parentId], references: [id])
+  parentRelation  Project @relation(fields: [parentSlug], references: [slug], onDelete: Cascade)
+  
+  @@id([parentSlug, id])
 }

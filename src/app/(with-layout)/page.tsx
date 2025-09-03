@@ -1,0 +1,61 @@
+"use server";
+import FeaturedSlide from "@/comps/FeaturedSlide";
+import NavbarItem from "@/comps/NavbarItem";
+import Project from "@/comps/Project";
+import SkillItemComp from "@/comps/SkillItem";
+import Skills from "@/comps/Skills";
+import Reviews from "@/comps/Reviews";
+import { getFrontPage } from "@/repo/frontPage";
+import { getAchievements } from "@/repo/reviews";
+import { getSkills } from "@/repo/skills";
+import Image from "next/image";
+import Header from "@/comps/HeaderContent";
+import Footer from "@/comps/Footer";
+
+export default async function Home() {
+  const skills = await getSkills("Skills");
+  const achievements = await getAchievements("Achievements");
+  return (
+    <div className="">
+      <main>
+        <div>
+          <div className="container mx-auto px-6">
+            <Skills skills={skills?.skillItems} />
+          </div>
+          <div className="bg-bg2 py-6 mt-20 border-y-2 border-prim">
+            <div className=" container mx-auto px-6">
+              <div className="">
+                <div className="text-center mb-8">
+                  <h1 className="font-bold text-5xl mb-2">
+                    {achievements?.title}
+                  </h1>
+                  <p>{achievements?.desc}</p>
+                </div>
+              </div>
+            </div>
+            <Reviews reviews={achievements?.reviews} />
+          </div>
+        </div>{" "}
+        <div className="container mx-auto px-6 mt-18">
+          <div className="">
+            <div className="text-center mb-8">
+              <h1 className="font-bold text-5xl mb-2">Portfolio</h1>
+              <p>{achievements?.desc}</p>
+            </div>
+          </div>
+          <div className="grid grid-cols-3 gap-8 mb-32 items-start">
+            <Project title={"testi"} img="project1.jpg">
+              testi
+            </Project>
+            <Project title={"testi"} img="project2.jpg">
+              testi
+            </Project>
+            <Project title={"testi"} img="project3.webp">
+              testi
+            </Project>
+          </div>
+        </div>
+      </main>
+    </div>
+  );
+}
