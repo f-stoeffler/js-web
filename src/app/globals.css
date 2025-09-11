@@ -67,10 +67,17 @@ body {
 }
 
 
+.project-swiper .swiper-wrapper {
+  align-items: center; /* add this will all relevant prefixes */
+}
 
+.swiper-pagination {
+  background-color: #0a0a0a99;
+  width: 20% !important;
+  border-radius: 100rem;
+  margin: 0 40%;
+}
 
-.swiper-slide {
-  background-size: contain;
-  background-repeat: no-repeat;
-  background-position: center;
+.swiper-pagination-bullet {
+  background-color: var(--fg) !important
 }

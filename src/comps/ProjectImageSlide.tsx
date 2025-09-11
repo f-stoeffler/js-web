@@ -8,13 +8,13 @@ export default function ProjectImageSlide({
   path: string;
 }>) {
   return (
-    <div className="flex items-center justify-center h-full">
+    <div className="">
       <Image
         src={`/projects/${path}`}
         height={1300}
         width={1300}
         alt="Project image"
-        className="object-contain max-h-full"
+        className="rounded-xl"
       />
     </div>
   );

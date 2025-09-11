@@ -13,25 +13,14 @@ export default function ProjectImagesSlide({
   return (
     <Swiper 
       modules={[Pagination]} 
-      pagination={true}
+        pagination={{
+          dynamicBullets: true,
+        }}
       spaceBetween={30} 
-      className="rounded-xl"
-      injectStyles={[
-        `.swiper-wrapper { 
-          display: flex; 
-          align-items: center; 
-          justify-content: center; 
-        }`,
-        `.swiper-slide { 
-          display: flex; 
-          align-items: center; 
-          justify-content: center; 
-          height: auto; 
-        }`
-      ]}
+      className="project-swiper"
     >
       {imgs?.map((img) => (
-        <SwiperSlide key={img.id}>
+        <SwiperSlide key={img.id} className="">
           <ProjectImageSlide path={img.imgPath} />
         </SwiperSlide>
       ))}
