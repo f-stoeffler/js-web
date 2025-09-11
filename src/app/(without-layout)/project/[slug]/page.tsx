@@ -26,7 +26,7 @@ export default async function ProjectPage({
           <div><ProjectImagesSlide imgs={project?.images} /></div>
                         
         </div>
-        <div className="col-span-7 pl-8">
+        <div className="col-span-7 pl-8 overflow-x-scroll h-96">
           <h1 className="text-3xl font-bold mb-2.5">{project?.title}</h1>
           <p>Lorem ipsum, dolor sit amet consectetur adipisicing elit. Quia harum iste, eos nemo quas sit! Incidunt hic, aspernatur fugiat maiores accusamus totam odit dolore iusto doloremque et magnam iste sit? Lorem ipsum dolor sit amet consectetur, adipisicing elit. Placeat, quaerat! Quod velit nihil fugiat assumenda repellendus consectetur vitae veritatis debitis est! Eaque dolorem accusamus magni illo deserunt beatae, praesentium quis? Lorem ipsum dolor sit amet, consectetur adipisicing elit. Quidem modi maxime reprehenderit molestiae ea eveniet, minus unde porro numquam esse consectetur, sint totam veritatis odio nulla alias nihil dolorum animi? Lorem, ipsum dolor sit amet consectetur adipisicing elit. Nulla quidem incidunt quos molestiae optio eum excepturi dolorum non voluptate saepe suscipit libero officiis, aperiam, corporis ratione aliquam! Praesentium, explicabo maxime?</p>
         </div>

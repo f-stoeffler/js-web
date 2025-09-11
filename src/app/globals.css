@@ -71,13 +71,7 @@ body {
   align-items: center; /* add this will all relevant prefixes */
 }
 
-.swiper-pagination {
-  background-color: #0a0a0a99;
-  width: 20% !important;
-  border-radius: 100rem;
-  margin: 0 40%;
-}
 
-.swiper-pagination-bullet {
+.swiper-pagination-bullet:not(.swiper-pagination-bullet-active) {
   background-color: var(--fg) !important
 }

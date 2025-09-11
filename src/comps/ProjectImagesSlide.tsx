@@ -17,6 +17,7 @@ export default function ProjectImagesSlide({
           dynamicBullets: true,
         }}
       spaceBetween={30} 
+        centeredSlides={true}
       className="project-swiper"
     >
       {imgs?.map((img) => (

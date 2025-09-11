@@ -33,7 +33,7 @@ export const updateProject = async (
   });
 };
 
-export const getProjects = async () => {
+export const getProjectsPage = async () => {
   return await prisma.projects.findMany({
     include: includeProjects,
   });
@@ -42,6 +42,18 @@ export const getProjects = async () => {
 export const getProject = async (slug: string) => {
   return await prisma.project.findUnique({
     where: { slug: slug },
+    include: includeImages,
+  });
+};
+
+
+export const getProjectsPaginated = async (page: number, pageSize: number) => {
+  return await prisma.project.findMany({
+    skip: (page - 1) * pageSize,
+    take: pageSize,
+    orderBy: {
+      createdAt: 'desc',
+    },
     include: includeImages,
   });
 };

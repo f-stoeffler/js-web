@@ -17,6 +17,9 @@ model FrontPage {
   desc            String
   btnText         String
   featuredImages  featuredImage[]
+
+  createdAt        DateTime           @default(now())
+  updatedAt        DateTime           @updatedAt
 }
 
 model featuredImage {
@@ -26,11 +29,17 @@ model featuredImage {
   imgPath         String
   parent          String @default("FrontPage")
   parentRelation  FrontPage @relation(fields: [parent], references: [pagePart])
+
+  createdAt        DateTime           @default(now())
+  updatedAt        DateTime           @updatedAt
 }
 
 model Skills {
   pagePart    String @id @default("Skills")
   skillItems  SkillItem[]
+
+  createdAt        DateTime           @default(now())
+  updatedAt        DateTime           @updatedAt
 }
 
 model SkillItem {
@@ -39,6 +48,9 @@ model SkillItem {
   desc            String
   parent          String @default("Skills")
   parentRelation  Skills @relation(fields: [parent], references: [pagePart])
+
+  createdAt        DateTime           @default(now())
+  updatedAt        DateTime           @updatedAt
 }
 
 model Achievements {
@@ -46,6 +58,9 @@ model Achievements {
   title     String
   desc      String
   reviews   Review[]
+  
+  createdAt        DateTime           @default(now())
+  updatedAt        DateTime           @updatedAt
 }
 
 model Review {
@@ -54,6 +69,9 @@ model Review {
   desc            String
   parent          String @default("Achievements")
   parentRelation  Achievements @relation(fields: [parent], references: [pagePart])
+  
+  createdAt        DateTime           @default(now())
+  updatedAt        DateTime           @updatedAt
 }
 
 model Projects {
@@ -61,6 +79,9 @@ model Projects {
   title     String
   desc      String
   projects  Project[]
+  
+  createdAt        DateTime           @default(now())
+  updatedAt        DateTime           @updatedAt
 }
 
 model Project {
@@ -73,6 +94,9 @@ model Project {
   parent          String @default("Projects")
   parentRelation  Projects @relation(fields: [parent], references: [pagePart])
   images          ProjectImage[]
+  
+  createdAt        DateTime           @default(now())
+  updatedAt        DateTime           @updatedAt
 }
 
 model ProjectImage {
@@ -82,4 +106,7 @@ model ProjectImage {
   parentRelation  Project @relation(fields: [parentSlug], references: [slug], onDelete: Cascade)
   
   @@id([parentSlug, id])
+  
+  createdAt        DateTime           @default(now())
+  updatedAt        DateTime           @updatedAt
 }
