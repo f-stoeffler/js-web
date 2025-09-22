@@ -30,7 +30,7 @@ export default async function ProjectPage({
           <ProjectImagesSlide imgs={project?.images} /></div>
           </div>
           <div className="col-span-7 pl-8 overflow-y-scroll max-h-svh">
-            <div className="my-30">
+            <div className="my-25">
               <h1 className="text-3xl font-bold mb-2.5">{project?.title}</h1>
               <p className="text-2xl">
                 Lorem ipsum, dolor sit amet consectetur adipisicing elit. Quia

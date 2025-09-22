@@ -6,6 +6,7 @@ import 'swiper/css/pagination';
 import FeaturedItem from "./FeaturedItem";
 import { featuredImage, ProjectImage } from "../../generated/prisma";
 import ProjectImagesSlideLarge from "./ProjectImagesSlideLarge";
+import 'bootstrap-icons/font/bootstrap-icons.css';
 
 export default function FullscreenImages({
   imgs,
@@ -32,10 +33,10 @@ export default function FullscreenImages({
         
         {/* Optional: Add a close button */}
         <button 
-          className="absolute top-4 right-4 bg-white text-black p-2 rounded-full z-30"
+          className="absolute top-4 right-4 bg-prim text-fg p-2 rounded-full z-30 hover:cursor-pointer hover:bg-red-500 transition-all"
           onClick={onClose}
         >
-          Close
+          <i className="bi bi-x-lg text-4xl mx-0.5"></i>
         </button>
       </div>
     </div>

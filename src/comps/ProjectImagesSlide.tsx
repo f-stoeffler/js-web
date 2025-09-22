@@ -35,15 +35,14 @@ export default function ProjectImagesSlide({
       >
         {imgs?.map((img) => (
           <SwiperSlide key={img.id} className="">
-            <ProjectImageSlide path={img.imgPath} 
-          onOpen={openFullscreen} />
+            <ProjectImageSlide path={img.imgPath} onOpen={openFullscreen} />
           </SwiperSlide>
         ))}
       </Swiper>
-      <FullscreenImages 
-        imgs={imgs} 
-        isOpen={isFullscreenOpen} 
-        onClose={closeFullscreen} 
+      <FullscreenImages
+        imgs={imgs}
+        isOpen={isFullscreenOpen}
+        onClose={closeFullscreen}
       />
     </div>
   );
