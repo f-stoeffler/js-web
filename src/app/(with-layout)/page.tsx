@@ -1,7 +1,7 @@
 "use server";
 import FeaturedSlide from "@/comps/FeaturedSlide";
 import NavbarItem from "@/comps/NavbarItem";
-import Project from "@/comps/Project";
+import ProjectComp from "@/comps/Project";
 import SkillItemComp from "@/comps/SkillItem";
 import Skills from "@/comps/Skills";
 import Reviews from "@/comps/Reviews";
@@ -11,6 +11,7 @@ import { getSkills } from "@/repo/skills";
 import Image from "next/image";
 import Header from "@/comps/HeaderContent";
 import Footer from "@/comps/Footer";
+import ProjectsComp from "@/comps/Projects";
 
 export default async function Home() {
   const skills = await getSkills("Skills");
@@ -43,17 +44,7 @@ export default async function Home() {
               <p>{achievements?.desc}</p>
             </div>
           </div>
-          <div className="grid grid-cols-3 gap-8 mb-32 items-start">
-            <Project title={"testi"} img="project1.jpg">
-              testi
-            </Project>
-            <Project title={"testi"} img="project2.jpg">
-              testi
-            </Project>
-            <Project title={"testi"} img="project3.webp">
-              testi
-            </Project>
-          </div>
+          <ProjectsComp />
         </div>
       </main>
     </div>

@@ -18,7 +18,6 @@ export default async function ProjectPage({
 }) {
   const { slug } = await params;
   const project = await getProject(slug);
-  console.log(project);
 
   return (
     <div className="">

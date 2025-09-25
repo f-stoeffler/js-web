@@ -6,23 +6,26 @@ import { getFrontPage } from "@/repo/frontPage";
 import { Prisma } from "../../generated/prisma";
 import { FrontPage } from "../../generated/prisma";
 import { usePathname } from "next/navigation";
+import Link from "next/link";
 
 export default function HeaderContent({
   frontPage,
 }: Readonly<{
   frontPage: Prisma.FrontPageGetPayload<{
-    include: { featuredImages: true }
+    include: { featuredImages: true };
   }> | null;
 }>) {
   const pathname = usePathname();
-  const isHomePage = pathname === '/'
-  return (
-    isHomePage ? (<div className="h-svh  flex flex-col">
+  const isHomePage = pathname === "/";
+  return isHomePage ? (
+    <div className="h-svh  flex flex-col">
       <div className="w-full shadow-md border-b-2 border-prim">
         <div className="container mx-auto">
           <div className="flex h-16 mx-6">
             <div className=" font-black flex items-center">
+            <Link href="/">
               <Image src="/showtech.png" width={300} height={80} alt="Logo" />
+            </Link>
             </div>
             <div className="flex justify-end h-full w-full">
               <NavbarItem url="/gugu">Leistungen</NavbarItem>
@@ -56,24 +59,23 @@ export default function HeaderContent({
         </div>
       </div>
     </div>
-    ) : (
-
-      <div className="w-full shadow-md border-b-2 border-prim">
-        <div className="container mx-auto">
-          <div className="flex h-16 mx-6">
-            <div className=" font-black flex items-center">
+  ) : (
+    <div className="w-full shadow-md border-b-2 border-prim">
+      <div className="container mx-auto">
+        <div className="flex h-16 mx-6">
+          <div className=" font-black flex items-center">
+            <Link href="/">
               <Image src="/showtech.png" width={300} height={80} alt="Logo" />
-            </div>
-            <div className="flex justify-end h-full w-full">
-              <NavbarItem url="/gugu">Leistungen</NavbarItem>
-              <NavbarItem url="/gaga">Kontakt</NavbarItem>
-              <NavbarItem url="/gaga">Preise</NavbarItem>
-              <NavbarItem url="/gugu">Musik</NavbarItem>
-            </div>
+            </Link>
+          </div>
+          <div className="flex justify-end h-full w-full">
+            <NavbarItem url="/gugu">Leistungen</NavbarItem>
+            <NavbarItem url="/gaga">Kontakt</NavbarItem>
+            <NavbarItem url="/gaga">Preise</NavbarItem>
+            <NavbarItem url="/gugu">Musik</NavbarItem>
           </div>
         </div>
       </div>
-    )
-
+    </div>
   );
 }

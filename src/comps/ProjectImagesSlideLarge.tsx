@@ -7,11 +7,15 @@ import "swiper/css/navigation";
 import { ProjectImage } from "../../generated/prisma";
 import ProjectImageSlide from "./ProjectImageSlide";
 import ProjectImageSlideLarge from "./ProjectImageSlideLarge";
+import { Swiper as SwiperType } from "swiper"; // Import Swiper type
+import { Ref, RefObject } from "react";
 
 export default function ProjectImagesSlideLarge({
   imgs,
+  swiperRefLarge,
 }: Readonly<{
   imgs: Array<ProjectImage> | undefined;
+  swiperRefLarge: RefObject<SwiperType | null>;
 }>) {
   return (
     <Swiper
@@ -19,13 +23,16 @@ export default function ProjectImagesSlideLarge({
       pagination={{
         dynamicBullets: true,
       }}
-        navigation={true}
+      navigation={true}
       spaceBetween={30}
       centeredSlides={true}
       className="project-swiper"
+      onSwiper={(swiper) => {
+        swiperRefLarge.current = swiper; // Store Swiper instance when it's initialized
+      }}
     >
       {imgs?.map((img) => (
-        <SwiperSlide key={img.id} className="" >
+        <SwiperSlide key={img.id} className="">
           <ProjectImageSlideLarge path={img.imgPath} />
         </SwiperSlide>
       ))}

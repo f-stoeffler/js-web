@@ -7,13 +7,17 @@ import FeaturedItem from "./FeaturedItem";
 import { featuredImage, ProjectImage } from "../../generated/prisma";
 import ProjectImagesSlideLarge from "./ProjectImagesSlideLarge";
 import 'bootstrap-icons/font/bootstrap-icons.css';
+import { Swiper as SwiperType } from "swiper"; // Import Swiper type
+import { Ref, RefObject } from "react";
 
 export default function FullscreenImages({
   imgs,
   isOpen,
   onClose,
+  swiperRefLarge,
 }: Readonly<{
   imgs: Array<ProjectImage> | undefined;
+  swiperRefLarge: RefObject<SwiperType | null>;
   isOpen: boolean;
   onClose: () => void;
 }>) {
@@ -23,13 +27,11 @@ export default function FullscreenImages({
   return (
     <div 
       className="fixed inset-0 w-full h-svh bg-black/50 z-20 flex"
-      onClick={onClose} // Close when clicking the background
     >
       <div 
         className="w-full h-svh p-5 flex items-center justify-center large-imgs"
-        onClick={(e) => e.stopPropagation()} // Prevent closing when clicking inside the modal
       >
-        <ProjectImagesSlideLarge imgs={imgs}  />
+        <ProjectImagesSlideLarge imgs={imgs} swiperRefLarge={swiperRefLarge}  />
         
         {/* Optional: Add a close button */}
         <button 

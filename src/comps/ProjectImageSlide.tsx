@@ -1,13 +1,14 @@
-
 import Image from "next/image";
 import "swiper/css/pagination";
 
 export default function ProjectImageSlide({
   path,
   onOpen,
+  chnageLargeToCurrentSlide: printCurrentSlideProp,
 }: Readonly<{
   path: string;
   onOpen: () => void;
+  chnageLargeToCurrentSlide: () => void;
 }>) {
   return (
     <div className="mx-auto md:max-h-120 max-w-7/8 flex ">
@@ -17,7 +18,9 @@ export default function ProjectImageSlide({
         width={1300}
         alt="Project image"
         className="object-contain rounded-xl hover:cursor-pointer"
-        onClick={onOpen}
+        onClick={() => {
+          onOpen();
+        }}
       />
     </div>
   );

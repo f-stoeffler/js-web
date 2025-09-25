@@ -50,7 +50,7 @@ export const getProject = async (slug: string) => {
 export const getProjectsPaginated = async (page: number, pageSize: number) => {
   return await prisma.project.findMany({
     skip: (page - 1) * pageSize,
-    take: pageSize,
+    take: pageSize+1, // Fetch one extra item to check if there's a next page
     orderBy: {
       createdAt: 'desc',
     },

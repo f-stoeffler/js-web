@@ -1,6 +1,6 @@
 import Image from "next/image";
 
-export default function Project({
+export default function ProjectComp({
   children,
   title,
   img
