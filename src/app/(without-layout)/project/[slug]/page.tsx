@@ -1,10 +1,10 @@
 "use server";
-import FeaturedSlide from "@/comps/FeaturedSlide";
+import FeaturedSlide from "@/comps/homepage/FeaturedSlide";
 import Footer from "@/comps/Footer";
-import FullscreenImages from "@/comps/FullscreenImages";
+import FullscreenImages from "@/comps/projectpage/FullscreenImages";
 import Header from "@/comps/Header";
-import ProjectImagesSlide from "@/comps/ProjectImagesSlide";
-import ProjectImagesSlideLarge from "@/comps/ProjectImagesSlideLarge";
+import ProjectImagesSlide from "@/comps/projectpage/ProjectImagesSlide";
+import ProjectImagesSlideLarge from "@/comps/projectpage/ProjectImagesSlideLarge";
 import { getFrontPage } from "@/repo/frontPage";
 import { getProject } from "@/repo/projects";
 import Image from "next/image";

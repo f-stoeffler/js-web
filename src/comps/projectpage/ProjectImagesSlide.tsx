@@ -3,7 +3,7 @@ import { Navigation, Pagination } from "swiper/modules";
 import { Swiper, SwiperSlide } from "swiper/react";
 import { Swiper as SwiperType } from "swiper"; // Import Swiper type
 import "swiper/css/pagination";
-import { ProjectImage } from "../../generated/prisma";
+import { ProjectImage } from "../../../generated/prisma";
 import ProjectImageSlide from "./ProjectImageSlide";
 import FullscreenImages from "./FullscreenImages";
 import { useState, useRef } from "react"; // Import useRef

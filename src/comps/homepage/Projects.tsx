@@ -1,7 +1,7 @@
 "use client";
 
 import { useState, useEffect } from "react";
-import { Project } from "../../generated/prisma";
+import { Project } from "../../../generated/prisma";
 import Image from "next/image";
 
 export default function ProjectsComp() {
@@ -35,7 +35,7 @@ export default function ProjectsComp() {
   }, [currentPage]);
 
   const handlePageChange = (newPage: number) => {
-    setCurrentPage(currentPage+newPage);
+    setCurrentPage(currentPage + newPage);
   };
 
   if (loading) {
@@ -59,7 +59,7 @@ export default function ProjectsComp() {
 
         {/* Projects Grid */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
-          {projects.map((project) => (
+          {projects.slice(0, 8).map((project) => (
             <div
               key={project.slug}
               className="bg-white rounded-lg shadow-md overflow-hidden"

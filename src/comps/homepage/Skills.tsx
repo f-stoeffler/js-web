@@ -1,4 +1,4 @@
-import { SkillItem } from "../../generated/prisma";
+import { SkillItem } from "../../../generated/prisma";
 import SkillItemComp from "./SkillItem";
 
 export default function Skills({

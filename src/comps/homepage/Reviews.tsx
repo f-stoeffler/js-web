@@ -8,7 +8,7 @@ import 'swiper/css';
 import 'swiper/css/free-mode';
 import 'swiper/css/autoplay';
 import ReviewComp from './Review';
-import { Review } from '../../generated/prisma';
+import { Review } from '../../../generated/prisma';
 
 export default function Reviews({
   reviews,

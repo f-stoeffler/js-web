@@ -4,7 +4,7 @@ import { Pagination } from "swiper/modules";
 import { Swiper, SwiperSlide } from "swiper/react";
 import 'swiper/css/pagination';
 import FeaturedItem from "./FeaturedItem";
-import { featuredImage } from "../../generated/prisma";
+import { featuredImage } from "../../../generated/prisma";
 
 export default function FeaturedSlide({
   imgs,

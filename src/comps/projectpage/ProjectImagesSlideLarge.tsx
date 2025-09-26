@@ -4,7 +4,7 @@ import { Swiper, SwiperSlide } from "swiper/react";
 import "swiper/css/pagination";
 import "swiper/css";
 import "swiper/css/navigation";
-import { ProjectImage } from "../../generated/prisma";
+import { ProjectImage } from "../../../generated/prisma";
 import ProjectImageSlide from "./ProjectImageSlide";
 import ProjectImageSlideLarge from "./ProjectImageSlideLarge";
 import { Swiper as SwiperType } from "swiper"; // Import Swiper type

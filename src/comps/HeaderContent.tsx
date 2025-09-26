@@ -1,7 +1,7 @@
 "use client";
 import Image from "next/image";
 import NavbarItem from "./NavbarItem";
-import FeaturedSlide from "./FeaturedSlide";
+import FeaturedSlide from "./homepage/FeaturedSlide";
 import { getFrontPage } from "@/repo/frontPage";
 import { Prisma } from "../../generated/prisma";
 import { FrontPage } from "../../generated/prisma";

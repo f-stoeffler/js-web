@@ -1,17 +1,17 @@
 "use server";
-import FeaturedSlide from "@/comps/FeaturedSlide";
+import FeaturedSlide from "@/comps/homepage/FeaturedSlide";
 import NavbarItem from "@/comps/NavbarItem";
-import ProjectComp from "@/comps/Project";
-import SkillItemComp from "@/comps/SkillItem";
-import Skills from "@/comps/Skills";
-import Reviews from "@/comps/Reviews";
+import ProjectComp from "@/comps/homepage/Project";
+import SkillItemComp from "@/comps/homepage/SkillItem";
+import Skills from "@/comps/homepage/Skills";
+import Reviews from "@/comps/homepage/Reviews";
 import { getFrontPage } from "@/repo/frontPage";
 import { getAchievements } from "@/repo/reviews";
 import { getSkills } from "@/repo/skills";
 import Image from "next/image";
 import Header from "@/comps/HeaderContent";
 import Footer from "@/comps/Footer";
-import ProjectsComp from "@/comps/Projects";
+import ProjectsComp from "@/comps/homepage/Projects";
 
 export default async function Home() {
   const skills = await getSkills("Skills");

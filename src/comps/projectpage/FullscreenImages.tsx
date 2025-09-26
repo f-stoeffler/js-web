@@ -3,8 +3,8 @@ import Image from "next/image";
 import { Pagination } from "swiper/modules";
 import { Swiper, SwiperSlide } from "swiper/react";
 import 'swiper/css/pagination';
-import FeaturedItem from "./FeaturedItem";
-import { featuredImage, ProjectImage } from "../../generated/prisma";
+import FeaturedItem from "../homepage/FeaturedItem";
+import { featuredImage, ProjectImage } from "../../../generated/prisma";
 import ProjectImagesSlideLarge from "./ProjectImagesSlideLarge";
 import 'bootstrap-icons/font/bootstrap-icons.css';
 import { Swiper as SwiperType } from "swiper"; // Import Swiper type
