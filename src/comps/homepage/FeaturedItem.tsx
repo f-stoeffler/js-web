@@ -12,7 +12,7 @@ export default function FeaturedItem({
   title: string;
 }>) {
   return (
-    <div className="relative w-full h-128 rounded-lg">
+    <div className="relative w-full h-86 xl:h-112 2xl:h-160 rounded-lg">
       <Image
         src={`/projects/${img}`}
         fill

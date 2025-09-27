@@ -38,8 +38,8 @@ export default function HeaderContent({
           </div>
         </div>
       </div>
-      <div className="flex-grow striped-background border-b-2 border-prim">
-        <div className="container mx-auto h-full flex items-center">
+      <div className="flex-grow striped-background border-b-2 border-prim flex items-center">
+        <div className="container mx-auto h-full flex my-5">
           <div className="mx-6 w-full">
             <div className="grid grid-cols-1 md:grid-cols-2 gap-8 w-full">
               <div className="flex items-center mx-auto">

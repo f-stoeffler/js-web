@@ -8,13 +8,13 @@ export default function ProjectImageSlideLarge({
   path: string | undefined;
 }>) {
   return (
-    <div className="mx-auto md:max-h-svh p-5 max-w-7/8 flex ">
+    <div className="mx-auto max-h-svh p-5 max-w-7/8 flex justify-center">
       <Image
         src={`/projects/${path}`}
         height={1300}
         width={1300}
         alt="Project image"
-        className="object-contain rounded-xl"
+        className="object-contain rounded-xl flex-grow"
       />
     </div>
   );

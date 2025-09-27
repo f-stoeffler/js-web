@@ -7,8 +7,8 @@ import ProjectComp from "./Project";
 import "bootstrap-icons/font/bootstrap-icons.css";
 
 export default function ProjectsComp() {
-  const largePageSize = 4;
-  const smallPageSize = 3;
+  const largePageSize = 8;
+  const smallPageSize = 6;
 
   const [projects, setProjects] = useState<Project[]>([]);
   const [currentPage, setCurrentPage] = useState(1);
@@ -86,7 +86,7 @@ export default function ProjectsComp() {
               <i className="bi bi-chevron-left text-4xl"></i>
             </button>
           </div>
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 2xl:grid-cols-4 gap-6 col-span-10">
+          <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 2xl:grid-cols-4 gap-6 col-span-10">
             {projects.slice(0, pageSize).map((project) => (
               <ProjectComp
                 key={project.slug}
