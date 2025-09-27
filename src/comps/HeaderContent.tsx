@@ -3,14 +3,16 @@ import Image from "next/image";
 import NavbarItem from "./NavbarItem";
 import FeaturedSlide from "./homepage/FeaturedSlide";
 import { getFrontPage } from "@/repo/frontPage";
-import { Prisma } from "../../generated/prisma";
+import { Prisma, Project } from "../../generated/prisma";
 import { FrontPage } from "../../generated/prisma";
 import { usePathname } from "next/navigation";
 import Link from "next/link";
 
 export default function HeaderContent({
   frontPage,
+  featuredProjects,
 }: Readonly<{
+  featuredProjects: Array<Project>;
   frontPage: Prisma.FrontPageGetPayload<{
     include: { featuredImages: true };
   }> | null;
@@ -18,7 +20,7 @@ export default function HeaderContent({
   const pathname = usePathname();
   const isHomePage = pathname === "/";
   return isHomePage ? (
-    <div className="h-svh  flex flex-col">
+    <div className="min-h-svh  flex flex-col">
       <div className="w-full shadow-md border-b-2 border-prim">
         <div className="container mx-auto">
           <div className="flex h-16 mx-6">
@@ -52,7 +54,7 @@ export default function HeaderContent({
                 </div>
               </div>
               <div>
-                <FeaturedSlide imgs={frontPage?.featuredImages} />
+                <FeaturedSlide featuredProjects={featuredProjects} />
               </div>
             </div>
           </div>

@@ -11,15 +11,16 @@ import "swiper/css/navigation";
 
 export default function ProjectImagesSlide({
   imgs,
+  mainImg,
 }: Readonly<{
   imgs: Array<ProjectImage> | undefined;
+  mainImg: string | undefined;
 }>) {
   const [isFullscreenOpen, setIsFullscreenOpen] = useState(false);
   const swiperRef = useRef<SwiperType | null>(null); // Ref to store Swiper instance
   const swiperRefLarge = useRef<SwiperType | null>(null); // Ref to store Swiper instance
 
   const chnageLargeToCurrentSlide = () => {
-    console.log(swiperRefLarge.current);
     if (swiperRefLarge.current && swiperRef.current) {
       swiperRefLarge.current.slideTo(swiperRef.current.activeIndex, 0); // 0-based index
     }
@@ -51,6 +52,9 @@ export default function ProjectImagesSlide({
           swiperRef.current = swiper; // Store Swiper instance when it's initialized
         }}
       >
+          <SwiperSlide className="">
+            <ProjectImageSlide path={mainImg} onOpen={openFullscreen} chnageLargeToCurrentSlide={chnageLargeToCurrentSlide} />
+          </SwiperSlide>
         {imgs?.map((img) => (
           <SwiperSlide key={img.id} className="">
             <ProjectImageSlide path={img.imgPath} onOpen={openFullscreen} chnageLargeToCurrentSlide={chnageLargeToCurrentSlide} />
@@ -59,6 +63,7 @@ export default function ProjectImagesSlide({
       </Swiper>
       <FullscreenImages
         imgs={imgs}
+        mainImg={mainImg}
         isOpen={isFullscreenOpen}
         onClose={closeFullscreen}
         swiperRefLarge={swiperRefLarge}

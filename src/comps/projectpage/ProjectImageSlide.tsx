@@ -6,7 +6,7 @@ export default function ProjectImageSlide({
   onOpen,
   chnageLargeToCurrentSlide: printCurrentSlideProp,
 }: Readonly<{
-  path: string;
+  path: string | undefined;
   onOpen: () => void;
   chnageLargeToCurrentSlide: () => void;
 }>) {

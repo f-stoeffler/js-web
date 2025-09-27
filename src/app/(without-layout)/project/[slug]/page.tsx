@@ -26,7 +26,7 @@ export default async function ProjectPage({
         <div className="flex-grow grid grid-cols-12 items-center overflow-hidden">
           <div className="col-span-5 pl-8">
             <div>
-          <ProjectImagesSlide imgs={project?.images} /></div>
+          <ProjectImagesSlide imgs={project?.images} mainImg={project?.mainImage} /></div>
           </div>
           <div className="col-span-7 pl-8 overflow-y-scroll max-h-svh">
             <div className="my-25">

@@ -58,6 +58,12 @@ export const getProjectsPaginated = async (page: number, pageSize: number) => {
   });
 };
 
+export const getAllFeaturedProjects = async () => {
+  return await prisma.project.findMany({
+    where: {featured: true}
+  });
+};
+
 export const deleteProject = async (slug: string) => {
   return await prisma.project.delete({ where: { slug: slug } });
 };

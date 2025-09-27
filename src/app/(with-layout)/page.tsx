@@ -12,6 +12,7 @@ import Image from "next/image";
 import Header from "@/comps/HeaderContent";
 import Footer from "@/comps/Footer";
 import ProjectsComp from "@/comps/homepage/Projects";
+import { getAllFeaturedProjects } from "@/repo/projects";
 
 export default async function Home() {
   const skills = await getSkills("Skills");

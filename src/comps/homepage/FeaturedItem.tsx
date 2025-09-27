@@ -5,18 +5,19 @@ import "swiper/css/pagination";
 export default function FeaturedItem({
   children,
   title,
+  img,
 }: Readonly<{
+  img: string;
   children: React.ReactNode;
   title: string;
 }>) {
   return (
-    <div className="relative">
+    <div className="relative w-full h-128 rounded-lg">
       <Image
-        src="/featured/js.jpg"
-        height={1300}
-        width={1300}
+        src={`/projects/${img}`}
+        fill
         alt="flowers"
-        className="w-full"
+        className=" object-cover rounded-lg"
       />
       <div className="absolute inset-x-0 bottom-0 flex items-end justify-center bg-linear-to-t from-black/90 to-transparent text-white">
         <div className="pt-8 pb-9 text-center">

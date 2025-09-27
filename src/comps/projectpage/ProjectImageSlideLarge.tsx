@@ -5,7 +5,7 @@ import "swiper/css/pagination";
 export default function ProjectImageSlideLarge({
   path,
 }: Readonly<{
-  path: string;
+  path: string | undefined;
 }>) {
   return (
     <div className="mx-auto md:max-h-svh p-5 max-w-7/8 flex ">

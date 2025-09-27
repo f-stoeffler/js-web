@@ -3,25 +3,52 @@
 import { useState, useEffect } from "react";
 import { Project } from "../../../generated/prisma";
 import Image from "next/image";
+import ProjectComp from "./Project";
+import "bootstrap-icons/font/bootstrap-icons.css";
 
 export default function ProjectsComp() {
+  const largePageSize = 4;
+  const smallPageSize = 3;
+
   const [projects, setProjects] = useState<Project[]>([]);
   const [currentPage, setCurrentPage] = useState(1);
-  const [totalPages, setTotalPages] = useState(1);
-  const [totalCount, setTotalCount] = useState(0);
+  const [pageSize, setPageSize] = useState(largePageSize);
   const [loading, setLoading] = useState(true);
+
+  // Update pageSize based on window width (lg breakpoint: 1024px)
+  useEffect(() => {
+    function handleResize() {
+      const newPageSize =
+        window.innerWidth < 1536 ? smallPageSize : largePageSize;
+
+      if (newPageSize !== pageSize) {
+        // Calculate new page based on current pageSize and newPageSize
+        let newPage = Math.trunc((currentPage * pageSize) / newPageSize);
+        if (newPage < 1) {
+          newPage = 1
+        }
+        setCurrentPage(newPage);
+        setPageSize(newPageSize);
+      }
+    }
+
+    handleResize();
+    window.addEventListener("resize", handleResize);
+    return () => window.removeEventListener("resize", handleResize);
+  }, [pageSize, currentPage, largePageSize, smallPageSize]);
 
   const fetchProjects = async (page: number) => {
     try {
       setLoading(true);
-      const response = await fetch(`/api/projects?page=${page}`);
+      const response = await fetch(
+        `/api/projects?page=${page}&pageSize=${pageSize}`
+      );
 
       if (!response.ok) {
         throw new Error("Failed to fetch projects");
       }
 
       const data = await response.json();
-      console.log(data);
       setProjects(data);
     } catch (error) {
       console.error("Error fetching projects:", error);
@@ -32,7 +59,7 @@ export default function ProjectsComp() {
 
   useEffect(() => {
     fetchProjects(currentPage);
-  }, [currentPage]);
+  }, [currentPage, pageSize]);
 
   const handlePageChange = (newPage: number) => {
     setCurrentPage(currentPage + newPage);
@@ -47,59 +74,45 @@ export default function ProjectsComp() {
   }
 
   return (
-    <div className="min-h-screen bg-gray-50 py-8 px-4">
-      <div className="max-w-6xl mx-auto">
-        <h1 className="text-3xl font-bold text-center text-gray-800 mb-8">
-          Our Projects
-        </h1>
-
-        <p className="text-center text-gray-600 mb-8">
-          Showing {projects.length} of {totalCount} projects
-        </p>
-
-        {/* Projects Grid */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
-          {projects.slice(0, 8).map((project) => (
-            <div
-              key={project.slug}
-              className="bg-white rounded-lg shadow-md overflow-hidden"
+    <div className="">
+      <div className="max-w-9xl mx-auto">
+        <div className="grid grid-cols-12">
+          <div className="flex items-center justify-center">
+            <button
+              onClick={() => handlePageChange(-1)}
+              disabled={currentPage === 1}
+              className="bg-priml hover:bg-prim rounded-full disabled:bg-gray-300 disabled:hover:cursor-default active:bg-primd hover:cursor-pointer pt-1.5 pr-2 pl-1 pb-1 transition-all"
             >
-              {project.mainImage && (
-                <Image
-                  src={"/projects/" + project.mainImage}
-                  width={400}
-                  height={400}
-                  alt={"furz"}
-                />
-              )}
-              <div className="p-4">
-                <h2 className="text-xl font-semibold text-gray-800 mb-2">
-                  {project.title}
-                </h2>
-                <p className="text-gray-600 text-sm">{project.shortDesc}</p>
-              </div>
-            </div>
-          ))}
-        </div>
+              <i className="bi bi-chevron-left text-4xl"></i>
+            </button>
+          </div>
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 2xl:grid-cols-4 gap-6 col-span-10">
+            {projects.slice(0, pageSize).map((project) => (
+              <ProjectComp
+                key={project.slug}
+                title={project.title}
+                img={project.mainImage}
+                slug={project.slug}
+              >
+                {project.shortDesc}
+              </ProjectComp>
+            ))}
+          </div>
 
+          <div className="flex items-center justify-center">
+            <button
+              onClick={() => handlePageChange(1)}
+              disabled={projects.length <= pageSize}
+              className="rounded-full bg-priml hover:bg-prim text-white disabled:bg-gray-300 disabled:hover:cursor-default active:bg-primd hover:cursor-pointer pt-1.5 pl-2 pr-1 pb-1 transition-all"
+            >
+              <i className="bi bi-chevron-right text-4xl"></i>
+            </button>
+          </div>
+        </div>
+        <div className="flex justify-center mt-3 mb-6 text-2xl">
+          Seite {currentPage}
+        </div>
         {/* Simple Pagination */}
-        <div className="flex justify-center items-center gap-4">
-          <button
-            onClick={() => handlePageChange(-1)}
-            disabled={currentPage === 1}
-            className="px-4 py-2 bg-blue-500 text-white rounded disabled:bg-gray-300 active:bg-green-400"
-          >
-            Previous
-          </button>
-
-          <button
-            onClick={() => handlePageChange(1)}
-            disabled={projects.length <= 8} // Assuming pageSize is 8
-            className="px-4 py-2 bg-blue-500 text-white rounded disabled:bg-gray-300 active:bg-green-400"
-          >
-            Next
-          </button>
-        </div>
       </div>
     </div>
   );

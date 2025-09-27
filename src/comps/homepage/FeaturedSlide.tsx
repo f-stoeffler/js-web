@@ -4,18 +4,19 @@ import { Pagination } from "swiper/modules";
 import { Swiper, SwiperSlide } from "swiper/react";
 import 'swiper/css/pagination';
 import FeaturedItem from "./FeaturedItem";
-import { featuredImage } from "../../../generated/prisma";
+import { featuredImage, Project } from "../../../generated/prisma";
 
 export default function FeaturedSlide({
-  imgs,
+  featuredProjects,
 }: Readonly<{
-  imgs: Array<featuredImage> | undefined;
+  featuredProjects: Array<Project> | undefined;
 }>) {
   return (
-    <Swiper modules={[Pagination]} pagination={true} className="rounded-xl w-full"  >
-      {imgs?.map((img) => (
-      <SwiperSlide key={img.id}>
-        <FeaturedItem title={img.title} >{img.desc}</FeaturedItem>
+    <Swiper modules={[Pagination]} pagination={true}
+        spaceBetween={30} className="rounded-xl w-full"  >
+      {featuredProjects?.map((project) => (
+      <SwiperSlide key={project.slug}>
+        <FeaturedItem title={project.title} img={project.mainImage} >{project.shortDesc}</FeaturedItem>
       </SwiperSlide>
       ))}
     </Swiper>

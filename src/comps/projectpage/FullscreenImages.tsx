@@ -11,11 +11,13 @@ import { Swiper as SwiperType } from "swiper"; // Import Swiper type
 import { Ref, RefObject } from "react";
 
 export default function FullscreenImages({
+  mainImg,
   imgs,
   isOpen,
   onClose,
   swiperRefLarge,
 }: Readonly<{
+  mainImg: string | undefined;
   imgs: Array<ProjectImage> | undefined;
   swiperRefLarge: RefObject<SwiperType | null>;
   isOpen: boolean;
@@ -31,7 +33,7 @@ export default function FullscreenImages({
       <div 
         className="w-full h-svh p-5 flex items-center justify-center large-imgs"
       >
-        <ProjectImagesSlideLarge imgs={imgs} swiperRefLarge={swiperRefLarge}  />
+        <ProjectImagesSlideLarge imgs={imgs} mainImg={mainImg} swiperRefLarge={swiperRefLarge}  />
         
         {/* Optional: Add a close button */}
         <button 

@@ -61,6 +61,16 @@ body {
 );
   }
 
+.striped-background-prim {
+    background: repeating-linear-gradient(
+  45deg,
+  var(--primd),
+  var(--primd) 16px,
+  var(--prim) 15px,
+  var(--prim) 30px
+);
+  }
+
 .container {
   @media (width >= 112rem) { max-width: 112rem; }
   @media (width >= 128rem) { max-width: 128rem; }
