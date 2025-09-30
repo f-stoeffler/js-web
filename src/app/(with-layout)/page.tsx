@@ -5,14 +5,14 @@ import ProjectComp from "@/comps/homepage/Project";
 import SkillItemComp from "@/comps/homepage/SkillItem";
 import Skills from "@/comps/homepage/Skills";
 import Reviews from "@/comps/homepage/Reviews";
-import { getFrontPage } from "@/repo/frontPage";
-import { getAchievements } from "@/repo/reviews";
-import { getSkills } from "@/repo/skills";
+import { getFrontPage } from "@/lib/frontPage";
+import { getAchievements } from "@/lib/reviews";
+import { getSkills } from "@/lib/skills";
 import Image from "next/image";
 import Header from "@/comps/HeaderContent";
 import Footer from "@/comps/Footer";
 import ProjectsComp from "@/comps/homepage/Projects";
-import { getAllFeaturedProjects } from "@/repo/projects";
+import { getAllFeaturedProjects } from "@/lib/projects";
 
 export default async function Home() {
   const skills = await getSkills("Skills");

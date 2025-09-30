@@ -29,6 +29,13 @@
   --color-fg2: var(--fg2);
 }
 
+.prose h1 {
+  font-size: var(--text-3xl)
+}
+
+.stroke {
+  -webkit-text-stroke: 1px var(--prim);}
+
 @theme {
   --breakpoint-xxs: 24rem;
   --breakpoint-xs: 32rem;

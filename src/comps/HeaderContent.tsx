@@ -2,7 +2,7 @@
 import Image from "next/image";
 import NavbarItem from "./NavbarItem";
 import FeaturedSlide from "./homepage/FeaturedSlide";
-import { getFrontPage } from "@/repo/frontPage";
+import { getFrontPage } from "@/lib/frontPage";
 import { Prisma, Project } from "../../generated/prisma";
 import { FrontPage } from "../../generated/prisma";
 import { usePathname } from "next/navigation";
@@ -66,7 +66,7 @@ export default function HeaderContent({
         <div className="md:container mx-auto">
           <div className="flex md:h-16 mx-2 md:mx-6 flex-col md:flex-row">
             <div className=" font-black flex items-center">
-              <Link href="/" className="mx-auto md:mx-0 mt-4 lg:mt-0">
+              <Link href="/" className="mx-auto md:mx-0 mt-4 md:mt-0">
                 <Image src="/showtech.png" width={300} height={80} alt="Logo" />
               </Link>
             </div>

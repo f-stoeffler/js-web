@@ -1,7 +1,7 @@
 "use server";
-import { getFrontPage } from "@/repo/frontPage";
+import { getFrontPage } from "@/lib/frontPage";
 import HeaderContent from "./HeaderContent";
-import { getAllFeaturedProjects } from "@/repo/projects";
+import { getAllFeaturedProjects } from "@/lib/projects";
 
 export default async function Header() {
   const frontPage = await getFrontPage("FrontPage");

@@ -7,8 +7,8 @@ import ProjectComp from "./Project";
 import "bootstrap-icons/font/bootstrap-icons.css";
 
 export default function ProjectsComp() {
-  const largePageSize = 4;
-  const smallPageSize = 3;
+  const largePageSize = 8;
+  const smallPageSize = 6;
 
   const [projects, setProjects] = useState<Project[]>([]);
   const [currentPage, setCurrentPage] = useState(1);

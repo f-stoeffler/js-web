@@ -1,5 +1,5 @@
 import { NextRequest, NextResponse } from 'next/server';
-import { getProjectsPaginated } from '@/repo/projects';
+import { getProjectsPaginated } from '@/lib/projects';
 
 export async function GET(request: NextRequest) {
   try {
