@@ -11,7 +11,7 @@ export default function ProjectImageSlide({
   chnageLargeToCurrentSlide: () => void;
 }>) {
   return (
-    <div className="mx-auto h-80 md:h-100 lg:max-h-120 max-w-7/8 flex ">
+    <div className="mx-auto h-80 md:h-80 lg:h-100 xl:h-130 2xl:h-170 3xl:h-200 max-w-7/8 flex ">
       <Image
         src={`/projects/${path}`}
         height={1300}
