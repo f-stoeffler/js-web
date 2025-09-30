@@ -28,10 +28,10 @@ export default function FullscreenImages({
 
   return (
     <div 
-      className="fixed inset-0 w-full h-svh bg-black/50 z-20 flex"
+      className="fixed inset-0 w-full h-screen bg-black/50 z-20 flex"
     >
       <div 
-        className="w-full h-svh p-5 flex items-center justify-center large-imgs"
+        className="w-full h-screen p-5 flex items-center justify-center large-imgs"
       >
         <ProjectImagesSlideLarge imgs={imgs} mainImg={mainImg} swiperRefLarge={swiperRefLarge}  />
         

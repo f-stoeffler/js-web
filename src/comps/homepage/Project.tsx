@@ -13,8 +13,8 @@ export default function ProjectComp({
   img: string;
 }>) {
   return (
-    <Link href={`/project/${slug}`} className="striped-background rounded-lg overflow-hidden border-4 hover:border-priml border-bg2 hover:cursor-pointer transition-all active:border-primd">
-      <div className="w-full h-64 relative">
+    <Link href={`/project/${slug}`} className="striped-background sm:rounded-lg overflow-hidden border-y-4 sm:border-x-4 hover:border-priml border-bg2 hover:cursor-pointer transition-all active:border-primd">
+      <div className="w-full h-56 xxs:h-80 xs:h-100 sm:h-64 relative">
         <Image
           src={`/projects/${img}`}
           fill

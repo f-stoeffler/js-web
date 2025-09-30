@@ -18,9 +18,26 @@ export default function Reviews({
   return (
     <Swiper
       modules={[Autoplay, FreeMode]}
-      spaceBetween={32}
-      slidesPerView={5}
-      slidesOffsetBefore={70}
+      breakpoints={{
+          0: {
+            slidesPerView: 1,
+            spaceBetween: 8,
+          },
+          800: {
+            slidesPerView: 3,
+            spaceBetween: 16,
+          },
+          1024: {
+            slidesPerView: 4,
+            spaceBetween: 32,
+            slidesOffsetBefore: 70,
+          },
+          1500: {
+            slidesPerView: 5,
+            spaceBetween: 32,
+            slidesOffsetBefore: 70,
+          },
+        }}
       shortSwipes={false}
       loopPreventsSliding={false}
       freeMode={true}

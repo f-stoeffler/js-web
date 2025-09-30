@@ -8,12 +8,10 @@ const includeProjects = {
 } satisfies Prisma.ProjectsInclude;
 
 const includeImages = {
-  images: true
-} satisfies Prisma.ProjectInclude
+  images: true,
+} satisfies Prisma.ProjectInclude;
 
-export const createProject = async (
-  project: Prisma.ProjectCreateInput
-) => {
+export const createProject = async (project: Prisma.ProjectCreateInput) => {
   return await prisma.project.create({ data: project });
 };
 
@@ -29,7 +27,7 @@ export const updateProject = async (
 ) => {
   return await prisma.project.update({
     where: { slug: slug },
-    data: project
+    data: project,
   });
 };
 
@@ -46,25 +44,27 @@ export const getProject = async (slug: string) => {
   });
 };
 
-
 export const getProjectsPaginated = async (page: number, pageSize: number) => {
-  return await prisma.project.findMany({
-    skip: (page - 1) * pageSize,
-    take: pageSize+1, // Fetch one extra item to check if there's a next page
-    orderBy: {
-      createdAt: 'desc',
-    },
-    include: includeImages,
-  });
+  const [allProjects, totalProjects] = await prisma.$transaction([
+    prisma.project.findMany({
+      skip: (page - 1) * pageSize,
+      take: pageSize + 1, // Fetch one extra item to check if there's a next page
+      orderBy: {
+        createdAt: "desc",
+      },
+      include: includeImages,
+    }),
+    prisma.project.count(),
+  ]);
+  return [allProjects, totalProjects];
 };
 
 export const getAllFeaturedProjects = async () => {
   return await prisma.project.findMany({
-    where: {featured: true}
+    where: { featured: true },
   });
 };
 
 export const deleteProject = async (slug: string) => {
   return await prisma.project.delete({ where: { slug: slug } });
 };
-

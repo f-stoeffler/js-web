@@ -22,24 +22,24 @@ export default function HeaderContent({
   return isHomePage ? (
     <div className="min-h-svh  flex flex-col">
       <div className="w-full shadow-md border-b-2 border-prim">
-        <div className="container mx-auto">
-          <div className="flex h-16 mx-6">
+        <div className="md:container mx-auto">
+          <div className="flex md:h-16 mx-2 md:mx-6 flex-col md:flex-row">
             <div className=" font-black flex items-center">
-            <Link href="/">
-              <Image src="/showtech.png" width={300} height={80} alt="Logo" />
-            </Link>
+              <Link href="/" className="mx-auto md:mx-0 mt-4 lg:mt-0">
+                <Image src="/showtech.png" width={300} height={80} alt="Logo" />
+              </Link>
             </div>
-            <div className="flex justify-end h-full w-full">
-              <NavbarItem url="/gugu">Leistungen</NavbarItem>
-              <NavbarItem url="/gaga">Kontakt</NavbarItem>
-              <NavbarItem url="/gaga">Preise</NavbarItem>
-              <NavbarItem url="/gugu">Musik</NavbarItem>
+            <div className=" flex justify-center md:justify-end h-full w-full">
+              <NavbarItem url="#">Leistungen</NavbarItem>
+              <NavbarItem url="#">Kontakt</NavbarItem>
+              <NavbarItem url="#">Preise</NavbarItem>
+              <NavbarItem url="#">Musik</NavbarItem>
             </div>
           </div>
         </div>
       </div>
       <div className="flex-grow striped-background border-b-2 border-prim flex items-center">
-        <div className="container mx-auto h-full flex my-5">
+        <div className="md:container mx-auto h-full flex my-5">
           <div className="mx-6 w-full">
             <div className="grid grid-cols-1 md:grid-cols-2 gap-8 w-full">
               <div className="flex items-center mx-auto">
@@ -62,22 +62,22 @@ export default function HeaderContent({
       </div>
     </div>
   ) : (
-    <div className="w-full shadow-md border-b-2 border-prim">
-      <div className="container mx-auto">
-        <div className="flex h-16 mx-6">
-          <div className=" font-black flex items-center">
-            <Link href="/">
-              <Image src="/showtech.png" width={300} height={80} alt="Logo" />
-            </Link>
-          </div>
-          <div className="flex justify-end h-full w-full">
-            <NavbarItem url="/gugu">Leistungen</NavbarItem>
-            <NavbarItem url="/gaga">Kontakt</NavbarItem>
-            <NavbarItem url="/gaga">Preise</NavbarItem>
-            <NavbarItem url="/gugu">Musik</NavbarItem>
+      <div className="w-full shadow-md border-b-2 border-prim">
+        <div className="md:container mx-auto">
+          <div className="flex md:h-16 mx-2 md:mx-6 flex-col md:flex-row">
+            <div className=" font-black flex items-center">
+              <Link href="/" className="mx-auto md:mx-0 mt-4 lg:mt-0">
+                <Image src="/showtech.png" width={300} height={80} alt="Logo" />
+              </Link>
+            </div>
+            <div className=" flex justify-center md:justify-end h-full w-full">
+              <NavbarItem url="#">Leistungen</NavbarItem>
+              <NavbarItem url="#">Kontakt</NavbarItem>
+              <NavbarItem url="#">Preise</NavbarItem>
+              <NavbarItem url="#">Musik</NavbarItem>
+            </div>
           </div>
         </div>
       </div>
-    </div>
   );
 }

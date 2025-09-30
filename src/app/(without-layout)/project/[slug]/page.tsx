@@ -21,15 +21,19 @@ export default async function ProjectPage({
 
   return (
     <div className="">
-      <div className="h-svh flex flex-col">
+      <div className="lg:h-svh flex flex-col">
         <Header />
-        <div className="flex-grow grid grid-cols-12 items-center overflow-hidden">
-          <div className="col-span-5 pl-8">
+        <div className="lg:flex-grow grid grid-cols-12 items-center overflow-hidden mt-6 lg:mt-0">
+          <div className="col-span-12 lg:col-span-5  lg:pl-8">
             <div>
-          <ProjectImagesSlide imgs={project?.images} mainImg={project?.mainImage} /></div>
+              <ProjectImagesSlide
+                imgs={project?.images}
+                mainImg={project?.mainImage}
+              />
+            </div>
           </div>
-          <div className="col-span-7 pl-8 overflow-y-scroll max-h-svh">
-            <div className="my-25">
+          <div className="col-span-12 lg:col-span-7 px-4 lg:px-8 overflow-y-auto lg:max-h-full">
+            <div className="my-5 ">
               <h1 className="text-3xl font-bold mb-2.5">{project?.title}</h1>
               <p className="text-2xl">
                 Lorem ipsum, dolor sit amet consectetur adipisicing elit. Quia

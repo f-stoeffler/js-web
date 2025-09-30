@@ -1,18 +1,22 @@
 
 import Image from "next/image";
+import Link from "next/link";
 import "swiper/css/pagination";
 
 export default function FeaturedItem({
   children,
   title,
   img,
+  slug,
 }: Readonly<{
+  slug: string;
   img: string;
   children: React.ReactNode;
   title: string;
 }>) {
   return (
-    <div className="relative w-full h-86 xl:h-112 2xl:h-160 rounded-lg">
+    <div  className="relative w-full h-86 xl:h-112 2xl:h-144 3xl:h-168 rounded-lg">
+      <Link href={`/project/${slug}`}>
       <Image
         src={`/projects/${img}`}
         fill
@@ -25,6 +29,7 @@ export default function FeaturedItem({
           <p>{children}</p>
         </div>
       </div>
+      </Link>
     </div>
   );
 }
