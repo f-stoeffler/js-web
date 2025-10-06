@@ -7,6 +7,7 @@ import { getSkills } from "@/lib/skills";
 import ProjectsComp from "@/comps/homepage/Projects";
 import { getAllFeaturedProjects } from "@/lib/projects";
 import HeaderHome from "@/comps/HeaderHome";
+import Footer from "@/comps/Footer";
 
 export default async function Home() {
   const skills = await getSkills("Skills");
@@ -45,6 +46,7 @@ export default async function Home() {
           <ProjectsComp />
         </div>
       </main>
+      <Footer />
     </div>
   );
 }

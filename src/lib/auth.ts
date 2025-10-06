@@ -2,11 +2,7 @@
 import { getServerSession, NextAuthOptions } from "next-auth";
 import GoogleProvider from "next-auth/providers/google";
 
-const ALLOWED_EMAILS = [
-  "admin@yourdomain.com",
-  "your-personal@gmail.com",
-  "florianstoeffler1@gmail.com",
-];
+const ALLOWED_EMAILS = process.env.ALLOWED_EMAILS?.split(',') || [];
 
 export const authOptions: NextAuthOptions = {
   providers: [
@@ -17,21 +13,10 @@ export const authOptions: NextAuthOptions = {
   ],
   callbacks: {
     async signIn({ user, account, profile }) {
-      // Check if the user's email is in the allowed list
       if (user.email && ALLOWED_EMAILS.includes(user.email)) {
         return true;
       }
-      
-      // Or check by domain (allows any email from your domain)
-      // if (user.email && user.email.endsWith('@yourcompany.com')) {
-      //   return true;
-      // }
-      
-      // Return false to display a default error message
       return '/unauthorized';
-      
-      // Or redirect to custom error page
-      // return '/unauthorized';
     },
     async session({ session, token }) {
       return session;
