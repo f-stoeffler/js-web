@@ -1,18 +1,13 @@
 "use server";
-import FeaturedSlide from "@/comps/homepage/FeaturedSlide";
 import Footer from "@/comps/Footer";
-import FullscreenImages from "@/comps/projectpage/FullscreenImages";
-import Header from "@/comps/Header";
 import ProjectImagesSlide from "@/comps/projectpage/ProjectImagesSlide";
-import ProjectImagesSlideLarge from "@/comps/projectpage/ProjectImagesSlideLarge";
-import { getFrontPage } from "@/lib/frontPage";
 import { getProject } from "@/lib/projects";
-import Image from "next/image";
 import "swiper/css";
 import "swiper/css/pagination";
 import Markdown from "react-markdown";
 import { getServerSession } from "next-auth/next";
 import { authOptions } from "@/lib/auth";
+import Header from "@/comps/Header";
 
 export default async function ProjectPage({
   params,
@@ -23,15 +18,11 @@ export default async function ProjectPage({
     return text.replace(/\\n/g, "\n");
   }
   const session = await getServerSession(authOptions);
+  const isAdmin = session !== null;
   const { slug } = await params;
   const project = await getProject(slug);
   const processedDesc = project?.desc ? convertNewlines(project.desc) : "";
 
-  // Log authentication status
-  console.log("Page - User authenticated:", !!session);
-  if (session) {
-    console.log("Page - User email:", session.user?.email);
-  }
 
   return (
     <div className="">
@@ -59,7 +50,7 @@ export default async function ProjectPage({
               <h1 className="text-4xl font-bold mb-2.5 text-center md:text-left">
                 {project?.title}
               </h1>
-              <div className="text-xl lg:text-2xl prose prose-lg ">
+              <div contentEditable={true} className="text-xl lg:text-2xl prose prose-lg ">
                 <Markdown>{processedDesc}</Markdown>
               </div>
             </div>

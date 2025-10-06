@@ -1,12 +1,32 @@
 "use server";
-import { getFrontPage } from "@/lib/frontPage";
-import HeaderContent from "./HeaderContent";
-import { getAllFeaturedProjects } from "@/lib/projects";
+import Image from "next/image";
+import NavbarItem from "./NavbarItem";
+import Link from "next/link";
+import { authOptions } from "@/lib/auth";
+import { getServerSession } from "next-auth";
 
 export default async function Header() {
-  const frontPage = await getFrontPage("FrontPage");
-  const featuredProjects = await getAllFeaturedProjects();
+  const session = await getServerSession(authOptions);
+  const isAdmin = session !== null;
   return (
-    <HeaderContent frontPage={frontPage} featuredProjects={featuredProjects}/>
+    <div className="w-full shadow-md border-b-2 border-prim">
+      <div className="md:container mx-auto">
+        <div className="flex md:h-16 mx-2 md:mx-6 flex-col md:flex-row">
+          <div className=" font-black flex items-center">
+            <Link href="/" className="mx-auto md:mx-0 mt-4 md:mt-0">
+              <Image src="/showtech.png" width={300} height={80} alt="Logo" />
+            </Link>
+          </div>
+          <div className=" flex justify-center md:justify-end h-full w-full">
+            {isAdmin && <><NavbarItem url="/api/auth/signout" isAdmin={true}>Adminmodus verlassen</NavbarItem>
+              <NavbarItem url="/admin-dashboard" isAdmin={true}>Admin Dashboard</NavbarItem></>}
+            <NavbarItem url="#">Leistungen</NavbarItem>
+            <NavbarItem url="#">Kontakt</NavbarItem>
+            <NavbarItem url="#">Preise</NavbarItem>
+            <NavbarItem url="#">Musik</NavbarItem>
+          </div>
+        </div>
+      </div>
+    </div>
   );
 }

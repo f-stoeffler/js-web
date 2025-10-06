@@ -1,5 +1,4 @@
 "use server";
-import HeaderContent from "./HeaderContent";
 
 export default async function Footer() {
   return (

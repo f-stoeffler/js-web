@@ -10,7 +10,7 @@ export default async function LoginButton() {
     console.log('✅ User is authenticated:', session.user);
     return (
       <div className="striped-background p-4 rounded-lg shadow-lg">
-        <p className="text-sm mb-2">Logged in as {session.user?.email}</p>
+        <p className="text-sm mb-2">Angemeldet als {session.user?.email}</p>
         <Link 
           href="/api/auth/signout"
           className="bg-red-500 text-white px-3 py-1 rounded text-sm inline-block"

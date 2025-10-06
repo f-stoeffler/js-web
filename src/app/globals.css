@@ -10,6 +10,7 @@
   --priml: #00aeff;
   --sec: #f6ee1c;
 }
+
 .hoverdark:hover {
   filter: brightness(85%);
 }

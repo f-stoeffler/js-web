@@ -2,7 +2,6 @@
 
 import { useState, useEffect } from "react";
 import { Project } from "../../../generated/prisma";
-import Image from "next/image";
 import ProjectComp from "./Project";
 import "bootstrap-icons/font/bootstrap-icons.css";
 

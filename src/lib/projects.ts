@@ -1,7 +1,6 @@
 "use server";
 import prisma from "./prismaclient";
 import { Prisma } from "../../generated/prisma";
-import { FrontPage } from "../../generated/prisma";
 
 const includeProjects = {
   projects: true,

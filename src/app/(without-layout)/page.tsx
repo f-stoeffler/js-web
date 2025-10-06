@@ -1,24 +1,21 @@
 "use server";
-import FeaturedSlide from "@/comps/homepage/FeaturedSlide";
-import NavbarItem from "@/comps/NavbarItem";
-import ProjectComp from "@/comps/homepage/Project";
-import SkillItemComp from "@/comps/homepage/SkillItem";
 import Skills from "@/comps/homepage/Skills";
 import Reviews from "@/comps/homepage/Reviews";
 import { getFrontPage } from "@/lib/frontPage";
 import { getAchievements } from "@/lib/reviews";
 import { getSkills } from "@/lib/skills";
-import Image from "next/image";
-import Header from "@/comps/HeaderContent";
-import Footer from "@/comps/Footer";
 import ProjectsComp from "@/comps/homepage/Projects";
 import { getAllFeaturedProjects } from "@/lib/projects";
+import HeaderHome from "@/comps/HeaderHome";
 
 export default async function Home() {
   const skills = await getSkills("Skills");
   const achievements = await getAchievements("Achievements");
+  const frontPage = await getFrontPage("FrontPage");
+  const featuredProjects = await getAllFeaturedProjects();
   return (
     <div className="">
+      <HeaderHome featuredProjects={featuredProjects} frontPage={frontPage}/>
       <main>
         <div>
           <div className="lg:container mx-auto lg:px-6">

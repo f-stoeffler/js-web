@@ -5,10 +5,9 @@ import "swiper/css/pagination";
 import "swiper/css";
 import "swiper/css/navigation";
 import { ProjectImage } from "../../../generated/prisma";
-import ProjectImageSlide from "./ProjectImageSlide";
 import ProjectImageSlideLarge from "./ProjectImageSlideLarge";
 import { Swiper as SwiperType } from "swiper"; // Import Swiper type
-import { Ref, RefObject } from "react";
+import { RefObject } from "react";
 
 export default function ProjectImagesSlideLarge({
   imgs,

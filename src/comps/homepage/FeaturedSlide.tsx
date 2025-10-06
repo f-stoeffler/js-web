@@ -1,10 +1,9 @@
 "use client";
-import Image from "next/image";
 import { Pagination } from "swiper/modules";
 import { Swiper, SwiperSlide } from "swiper/react";
 import 'swiper/css/pagination';
 import FeaturedItem from "./FeaturedItem";
-import { featuredImage, Project } from "../../../generated/prisma";
+import {  Project } from "../../../generated/prisma";
 
 export default function FeaturedSlide({
   featuredProjects,
