@@ -14,7 +14,7 @@ import {
 import { useState } from "react";
 import Markdown from "react-markdown";
 import { updateProject } from "@/lib/projects";
-import { Project } from "../../../generated/prisma";
+import { Project } from "@prisma/client";
 import ProjectTitle from "./ProjectTitle";
 
 export default function ProjectDescEditor({
@@ -102,14 +102,14 @@ export default function ProjectDescEditor({
           <button
             onClick={handleSave}
             disabled={isSaving}
-            className="px-4 py-2 bg-blue-600 text-white rounded disabled:opacity-50 disabled:cursor-not-allowed"
+            className="px-4 py-2 bg-prim text-white rounded disabled:opacity-50 disabled:cursor-not-allowed hover:bg-primd hover:cursor-pointer transition-all"
           >
             {isSaving ? "Speichern..." : "Speichern"}
           </button>
           <button
             onClick={handleCancel}
             disabled={isSaving}
-            className="px-4 py-2 border rounded disabled:opacity-50"
+            className="px-4 py-2 border rounded disabled:opacity-50 border-red-500 text-red-500 hover:cursor-pointer hover:bg-red-500 hover:text-white transition-all"
           >
             Abbrechen
           </button>

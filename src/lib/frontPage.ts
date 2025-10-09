@@ -1,6 +1,6 @@
 "use server";
 import prisma from "./prismaclient";
-import { Prisma } from "../../generated/prisma";
+import { Prisma } from "@prisma/client";
 
 const includeFeaturedImages = {
   featuredImages: true,

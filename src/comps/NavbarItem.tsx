@@ -5,7 +5,7 @@ export default function NavbarItem({
 }: Readonly<{
   children: React.ReactNode;
   url: string;
-  isAdmin?: Boolean | undefined;
+  isAdmin?: boolean | undefined;
 }>) {
   return isAdmin ? (
     <Link

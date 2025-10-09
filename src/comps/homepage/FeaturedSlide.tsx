@@ -3,7 +3,7 @@ import { Pagination } from "swiper/modules";
 import { Swiper, SwiperSlide } from "swiper/react";
 import 'swiper/css/pagination';
 import FeaturedItem from "./FeaturedItem";
-import {  Project } from "../../../generated/prisma";
+import {  Project } from "@prisma/client";
 
 export default function FeaturedSlide({
   featuredProjects,

@@ -1,7 +1,7 @@
 "use client";
 
 import { useState, useEffect } from "react";
-import { Project } from "../../../generated/prisma";
+import { Project } from "@prisma/client";
 import ProjectComp from "./Project";
 import "bootstrap-icons/font/bootstrap-icons.css";
 

@@ -1,10 +1,10 @@
 "use client";
 import 'swiper/css/pagination';
-import { ProjectImage } from "../../../generated/prisma";
 import ProjectImagesSlideLarge from "./ProjectImagesSlideLarge";
 import 'bootstrap-icons/font/bootstrap-icons.css';
 import { Swiper as SwiperType } from "swiper"; // Import Swiper type
 import { RefObject } from "react";
+import { ProjectImage } from '@prisma/client';
 
 export default function FullscreenImages({
   mainImg,

@@ -1,6 +1,6 @@
 
 import FeaturedSlide from "./homepage/FeaturedSlide";
-import { Prisma, Project } from "../../generated/prisma";
+import { Prisma, Project } from "@prisma/client";
 import Header from "./Header";
 
 export default async function HeaderHome({
