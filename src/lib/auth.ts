@@ -2,7 +2,7 @@
 import { getServerSession, NextAuthOptions } from "next-auth";
 import GoogleProvider from "next-auth/providers/google";
 
-const ALLOWED_EMAILS = process.env.ALLOWED_EMAILS?.split(',') || [];
+const ALLOWED_EMAILS = process.env.ALLOWED_EMAILS?.split(",") || [];
 
 export const authOptions: NextAuthOptions = {
   providers: [
@@ -16,7 +16,7 @@ export const authOptions: NextAuthOptions = {
       if (user.email && ALLOWED_EMAILS.includes(user.email)) {
         return true;
       }
-      return '/unauthorized';
+      return "/unauthorized";
     },
     async session({ session, token }) {
       return session;
@@ -27,4 +27,15 @@ export const authOptions: NextAuthOptions = {
 export async function getCurrentUser() {
   const session = await getServerSession(authOptions);
   return session?.user;
+}
+
+export async function checkIfUserIsAdmin() {
+  const session = await getServerSession(authOptions);
+
+  const ALLOWED_EMAILS = process.env.ALLOWED_EMAILS?.split(",") || [];
+  const isAdmin = session?.user?.email
+    ? ALLOWED_EMAILS.includes(session.user.email)
+    : false;
+
+  return isAdmin;
 }

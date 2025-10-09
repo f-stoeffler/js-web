@@ -9,13 +9,13 @@ export default function NavbarItem({
 }>) {
   return isAdmin ? (
     <Link
-      className="p-4 mt-3 bg-bg2 md:mt-0 hover:bg-bg2 hover:border-b-3 border-prim transition-all flex items-center h-full duration-50"
+      className="p-4 mt-3 bg-red-500/10 md:mt-0 hover:bg-red-500/50 hover:border-b-3 border-prim transition-all flex items-center h-full duration-50"
       href={url}
     >
       {children}
     </Link>) : (
     <Link
-      className="p-4 mt-3 md:mt-0 hover:bg-bg2 hover:border-b-3 border-prim transition-all flex items-center h-full duration-50 "
+      className="p-4 mt-3 md:mt-0 hover:bg-bg2 hover:border-b-3 border-prim  transition-all flex items-center h-full duration-50 "
       href={url}
     >
       {children}

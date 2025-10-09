@@ -2,12 +2,11 @@
 import Image from "next/image";
 import NavbarItem from "./NavbarItem";
 import Link from "next/link";
-import { authOptions } from "@/lib/auth";
+import { authOptions, checkIfUserIsAdmin } from "@/lib/auth";
 import { getServerSession } from "next-auth";
 
 export default async function Header() {
-  const session = await getServerSession(authOptions);
-  const isAdmin = session !== null;
+  const isAdmin = await checkIfUserIsAdmin();
   return (
     <div className="w-full shadow-md border-b-2 border-prim">
       <div className="md:container mx-auto">

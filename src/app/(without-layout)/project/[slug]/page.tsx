@@ -5,64 +5,78 @@ import { getProject } from "@/lib/projects";
 import "swiper/css";
 import "swiper/css/pagination";
 import Markdown from "react-markdown";
-import { getServerSession } from "next-auth/next";
-import { authOptions } from "@/lib/auth";
+import { checkIfUserIsAdmin } from "@/lib/auth";
 import Header from "@/comps/Header";
 import ProjectDescEditor from "@/comps/projectpage/ProjectDescEditor";
+import Link from "next/link";
+import ProjectTitle from "@/comps/projectpage/ProjectTitle";
 
 export default async function ProjectPage({
   params,
 }: {
   params: Promise<{ slug: string }>;
 }) {
-  function convertNewlines(text: string) {
-    return text.replace(/\\n/g, "\n");
-  }
-  const ALLOWED_EMAILS = process.env.ALLOWED_EMAILS?.split(",") || [];
-  const session = await getServerSession(authOptions);
-  const adminEmail = session?.user?.email
-    ? ALLOWED_EMAILS.includes(session?.user?.email)
-    : false;
+  const isAdmin = await checkIfUserIsAdmin();
+  console.log(isAdmin);
   const { slug } = await params;
   const project = await getProject(slug);
-  const processedDesc = project?.desc ? convertNewlines(project.desc) : "";
 
-  return (
-    <div className="">
-      <div className="lg:h-svh flex flex-col">
+  if (project === null || project.slug === undefined) {
+    return (
+      <div className="h-svh flex flex-col">
         <Header />
-        <div className="lg:flex-grow grid grid-cols-12 items-center overflow-hidden mt-6 lg:mt-0">
-          <div className="col-span-12 lg:col-span-5  lg:pl-8">
-            <div>
-              <ProjectImagesSlide
-                imgs={project?.images}
-                mainImg={project?.mainImage}
-              />
-            </div>
-          </div>
-          <div className="col-span-12 lg:col-span-7 px-4 lg:px-16 overflow-y-auto lg:max-h-full">
-            <div className="my-5 ">
-              {" "}
-              {adminEmail && (
-                <div className="mt-4 p-4 striped-background rounded">
-                  <p className="text-sm">
-                    Admin mode: You can edit this project
-                  </p>
-                </div>
-              )}
-              <h1 className="text-6xl font-bold mb-2.5 text-center md:text-left">
-                {project?.title}
-              </h1>
-              <div
-                className=""
-              >
-                <ProjectDescEditor isAdmin={adminEmail} initialValue={processedDesc} />
-              </div>
-            </div>
+        <div className="flex-grow items-center justify-center flex">
+          <div className="text-center">
+            Dieses Projekt existiert nicht.
+            <br />
+            <Link href="/" className="text-prim underline hover:no-underline">
+              Zurück zur Startseite
+            </Link>
           </div>
         </div>
         <Footer />
       </div>
-    </div>
-  );
+    );
+  } else {
+    return (
+      <div className="">
+        <div className="2md:h-svh flex flex-col">
+          <Header />
+          <div className="2md:flex-grow grid grid-cols-12 items-center overflow-hidden mt-6 2md:mt-0">
+            <div className="col-span-12 2md:col-span-5  2md:pl-8">
+              <div>
+                <ProjectImagesSlide
+                  imgs={project?.images}
+                  mainImg={project?.mainImage}
+                />
+              </div>
+            </div>
+            <div className="col-span-12 2md:col-span-7 px-4 sm:px-12 2md:px-16 overflow-y-auto 2md:max-h-full">
+              <div className="my-5 ">
+                {" "}
+                <div className="">
+                  {isAdmin ? (
+                    <ProjectDescEditor
+                      isAdmin={isAdmin}
+                      initialDesc={project?.desc}
+                      slug={project?.slug}
+                      initialTitle={project?.title}
+                    />
+                  ) : (
+                    <>
+                      <ProjectTitle title={project.title} />
+                      <div className="prose prose-lg 1.5xl:prose-xl 2xl:prose-2xl dark:prose-invert max-w-none single-break">
+                        <Markdown>{project.desc}</Markdown>
+                      </div>
+                    </>
+                  )}
+                </div>
+              </div>
+            </div>
+          </div>
+          <Footer />
+        </div>
+      </div>
+    );
+  }
 }

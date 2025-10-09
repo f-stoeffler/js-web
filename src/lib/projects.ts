@@ -1,6 +1,7 @@
 "use server";
 import prisma from "./prismaclient";
 import { Prisma } from "../../generated/prisma";
+import { checkIfUserIsAdmin } from "./auth";
 
 const includeProjects = {
   projects: true,
@@ -24,10 +25,25 @@ export const updateProject = async (
   slug: string,
   project: Prisma.ProjectUpdateInput
 ) => {
-  return await prisma.project.update({
-    where: { slug: slug },
-    data: project,
-  });
+  try {
+    const isAdmin = await checkIfUserIsAdmin();
+
+
+    if (!isAdmin) {
+      throw new Error("Unauthorized");
+    }
+    
+    const updatedProject = await prisma.project.update({
+      where: { slug },
+      data: project,
+    });
+
+    return { success: true, project: updatedProject };
+
+  } catch (error) {
+    console.error("Error updating project:", error);
+    return { success: false, error: "Failed to update project" };
+  }
 };
 
 export const getProjectsPage = async () => {

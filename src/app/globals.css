@@ -39,6 +39,20 @@
   font-family: Arial, Helvetica, sans-serif !important;
 }
 
+.prose p {
+  white-space: pre-wrap;
+}
+
+.prose a {
+  color: var(--prim);
+}
+
+
+.prose a:hover {
+  color: var(--primd);
+  text-decoration: none;
+}
+
 .stroke {
   -webkit-text-stroke: 1px var(--prim);
 }
@@ -46,7 +60,10 @@
 @theme {
   --breakpoint-xxs: 24rem;
   --breakpoint-xs: 32rem;
+  --breakpoint-2md: 56rem;
+  --breakpoint-1.5xl: 88rem;
   --breakpoint-3xl: 112rem;
+  --text-4.5xl: 2.6rem;
 }
 @custom-variant hover (&:hover);
 
