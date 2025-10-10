@@ -14,7 +14,6 @@ import {
 import { useState } from "react";
 import Markdown from "react-markdown";
 import { updateProject } from "@/lib/projects";
-import { Project } from "@prisma/client";
 import ProjectTitle from "./ProjectTitle";
 
 export default function ProjectDescEditor({
@@ -126,9 +125,9 @@ export default function ProjectDescEditor({
       </div>
       <button
         onClick={() => setEditing(true)}
-        className="px-3 py-2 mt-3 text-lg bg-prim rounded hover:cursor-pointer hover:bg-primd transition-all"
+        className="px-3 py-2 mt-4 text-lg bg-prim rounded hover:cursor-pointer hover:bg-primd transition-all"
       >
-        Bearbeiten
+        Text & Titel Bearbeiten
       </button>
     </div>
   );

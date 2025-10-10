@@ -10,6 +10,7 @@ import Header from "@/comps/Header";
 import ProjectDescEditor from "@/comps/projectpage/ProjectDescEditor";
 import Link from "next/link";
 import ProjectTitle from "@/comps/projectpage/ProjectTitle";
+import ProjectChangeImageModal from "@/comps/projectpage/ProjectChangeImageModal";
 
 export default async function ProjectPage({
   params,
@@ -56,12 +57,15 @@ export default async function ProjectPage({
                 {" "}
                 <div className="">
                   {isAdmin ? (
-                    <ProjectDescEditor
-                      isAdmin={isAdmin}
-                      initialDesc={project?.desc}
-                      slug={project?.slug}
-                      initialTitle={project?.title}
-                    />
+                    <>
+                      <ProjectDescEditor
+                        isAdmin={isAdmin}
+                        initialDesc={project?.desc}
+                        slug={project?.slug}
+                        initialTitle={project?.title}
+                      />
+                      <ProjectChangeImageModal isAdmin={isAdmin} imgs={project.images} mainImg={project.mainImage} slug={project.slug} />
+                    </>
                   ) : (
                     <>
                       <ProjectTitle title={project.title} />

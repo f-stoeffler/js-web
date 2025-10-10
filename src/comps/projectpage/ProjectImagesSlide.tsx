@@ -36,28 +36,35 @@ export default function ProjectImagesSlide({
     setIsFullscreenOpen(false);
   };
 
-
   return (
     <div>
       <Swiper
-      modules={[Pagination, Navigation]}
+        modules={[Pagination, Navigation]}
         pagination={{
           dynamicBullets: true,
         }}
         spaceBetween={30}
-      navigation={true}
+        navigation={true}
         centeredSlides={true}
         className="project-swiper"
         onSwiper={(swiper) => {
           swiperRef.current = swiper; // Store Swiper instance when it's initialized
         }}
       >
-          <SwiperSlide className="">
-            <ProjectImageSlide path={mainImg} onOpen={openFullscreen} chnageLargeToCurrentSlide={chnageLargeToCurrentSlide} />
-          </SwiperSlide>
+        <SwiperSlide className="">
+          <ProjectImageSlide
+            path={mainImg}
+            onOpen={openFullscreen}
+            chnageLargeToCurrentSlide={chnageLargeToCurrentSlide}
+          />
+        </SwiperSlide>
         {imgs?.map((img) => (
           <SwiperSlide key={img.id} className="">
-            <ProjectImageSlide path={img.imgPath} onOpen={openFullscreen} chnageLargeToCurrentSlide={chnageLargeToCurrentSlide} />
+            <ProjectImageSlide
+              path={img.imgPath}
+              onOpen={openFullscreen}
+              chnageLargeToCurrentSlide={chnageLargeToCurrentSlide}
+            />
           </SwiperSlide>
         ))}
       </Swiper>
