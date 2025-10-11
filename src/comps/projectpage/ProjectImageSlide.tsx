@@ -13,7 +13,7 @@ export default function ProjectImageSlide({
   return (
     <div className="mx-auto h-80 md:h-80 lg:h-100 xl:h-130 2xl:h-170 3xl:h-200 max-w-7/8 flex ">
       <Image
-        src={`/projects/${path}`}
+        src={`http://localhost:3000/api/project/${path}`}
         height={1300}
         width={1300}
         alt="Project image"

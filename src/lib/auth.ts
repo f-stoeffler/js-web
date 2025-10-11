@@ -1,6 +1,7 @@
 // lib/auth.ts
 import { getServerSession, NextAuthOptions } from "next-auth";
 import GoogleProvider from "next-auth/providers/google";
+import { redirect } from "next/navigation";
 
 const ALLOWED_EMAILS = process.env.ALLOWED_EMAILS?.split(",") || [];
 
@@ -32,10 +33,12 @@ export async function getCurrentUser() {
 export async function checkIfUserIsAdmin() {
   const session = await getServerSession(authOptions);
 
+  if (!session) return false
+
   const ALLOWED_EMAILS = process.env.ALLOWED_EMAILS?.split(",") || [];
   const isAdmin = session?.user?.email
     ? ALLOWED_EMAILS.includes(session.user.email)
     : false;
-
+  if (!isAdmin) redirect("/api/auth/signout")
   return isAdmin;
 }

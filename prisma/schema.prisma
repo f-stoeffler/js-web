@@ -101,6 +101,7 @@ model Project {
 model ProjectImage {
   id              Int
   parentSlug      String
+  altText         String @default("Kein Alttext")
   imgPath         String
   parentRelation  Project @relation(fields: [parentSlug], references: [slug], onDelete: Cascade)
   
