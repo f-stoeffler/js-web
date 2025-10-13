@@ -20,12 +20,40 @@ export default function ProjectChangeImageModal({
   imgs: Array<ProjectImage> | undefined;
   mainImg: string | undefined;
 }) {
+  const updateTemplate: (
+    imgIdVal: number,
+    imgPathVal: string
+  ) => Prisma.ProjectImageUpdateWithWhereUniqueWithoutParentRelationInput = (
+    imgIdVal,
+    imgPathVal
+  ) => {
+    return {
+      where: {
+        parentSlug_id: {
+          parentSlug: slug,
+          id: imgIdVal,
+        },
+      },
+      data: {
+        imgPath: imgPathVal,
+      },
+    };
+  };
+
   const [changeImageModalOpen, setChangeImageModalOpen] = useState(false);
   const [isSaving, setIsSaving] = useState(false);
   const [saveError, setSaveError] = useState<string | null>(null);
   const [uploading, setUploading] = useState(false);
-  const fileInputRef = useRef<HTMLInputElement>(null);
+  const mainFileInputRef = useRef<HTMLInputElement>(null);
+  const otherFileInputRef = useRef<HTMLInputElement>(null);
   const [selectedImageId, setSelectedImageId] = useState<number | null>(null);
+  const [isActive, setActive] = useState("add"); // or your default value
+  const [projectUpdates, setProjectUpdates] = useState<
+    Map<
+      number,
+      Prisma.ProjectImageUpdateWithWhereUniqueWithoutParentRelationInput
+    >
+  >(new Map());
 
   const handleSave = async () => {
     if (!isAdmin) return;
@@ -58,18 +86,25 @@ export default function ProjectChangeImageModal({
 
   const handleChangeMainImageClick = () => {
     setSelectedImageId(null); // Clear any selected image ID
-    if (fileInputRef.current) {
-      fileInputRef.current.click();
+    if (mainFileInputRef.current) {
+      mainFileInputRef.current.click();
     }
   };
 
   const handleOtherImageClick = (imageId: number) => {
     setSelectedImageId(imageId);
+    if (projectUpdates.get(imageId) != undefined) {
+      const projectUpdatesTemp = new Map(projectUpdates);
+      setProjectUpdates(
+        projectUpdatesTemp.set(imageId, updateTemplate(imageId, ""))
+      );
+    } else {
+      projectUpdates.delete(imageId);
+    }
     console.log("Clicked image ID:", imageId);
-    // For now, just log the ID. You can add file selection logic here later
   };
 
-  const handleFileSelect = async (
+  const handleOtherFileSelect = async (
     event: React.ChangeEvent<HTMLInputElement>
   ) => {
     const files = event.target.files;
@@ -81,28 +116,52 @@ export default function ProjectChangeImageModal({
 
       try {
         // Create FormData for file upload
-const projectUpdateObject: Prisma.ProjectUpdateInput = {
-  images: {
-    update: [
-      {
-        where: { 
-          parentSlug_id: { 
-            parentSlug: "asd", 
-            id: 1 
-          } 
-        },
-        data: {
-          // The fields you want to update
-          imgPath: "new-image-url.jpg",
-          // ... other ProjectImage fields
-        }
-      }
-    ],
-  },
-};
+        const projectUpdateObject: Prisma.ProjectUpdateInput = {
+          images: {
+            update: [
+              {
+                where: {
+                  parentSlug_id: {
+                    parentSlug: slug,
+                    id: 1,
+                  },
+                },
+                data: {
+                  imgPath: "new-image-url.jpg",
+                },
+              },
+              {
+                where: {
+                  parentSlug_id: {
+                    parentSlug: slug,
+                    id: 2,
+                  },
+                },
+                data: {
+                  imgPath: "new-image-url.jpg",
+                },
+              },
+            ],
+            create: [
+              {
+                id: 2,
+                imgPath: "new-image-url.jpg",
+              },
+            ],
+            delete: [
+              {
+                parentSlug_id: {
+                  parentSlug: slug,
+                  id: 1,
+                },
+              },
+            ],
+          },
+        };
         const formData = new FormData();
         formData.append("image", selectedFile);
         formData.append("slug", slug);
+        formData.append("dbUpdate", JSON.stringify(projectUpdates));
 
         // Check if we're updating main image or another image
         if (selectedImageId === null) {
@@ -157,8 +216,109 @@ const projectUpdateObject: Prisma.ProjectUpdateInput = {
         setUploading(false);
         setSelectedImageId(null);
         // Reset the input
-        if (fileInputRef.current) {
-          fileInputRef.current.value = "";
+        if (mainFileInputRef.current) {
+          mainFileInputRef.current.value = "";
+        }
+      }
+    }
+  };
+
+  const handleMainFileSelect = async (
+    event: React.ChangeEvent<HTMLInputElement>
+  ) => {
+    const files = event.target.files;
+    if (files && files.length > 0 && isAdmin) {
+      const selectedFile = files[0];
+
+      setUploading(true);
+      setSaveError(null);
+
+      try {
+        // Create FormData for file upload
+        const projectUpdateObject: Prisma.ProjectUpdateInput = {
+          images: {
+            update: [
+              {
+                where: {
+                  parentSlug_id: {
+                    parentSlug: slug,
+                    id: 1,
+                  },
+                },
+                data: {
+                  imgPath: "new-image-url.jpg",
+                },
+              },
+              {
+                where: {
+                  parentSlug_id: {
+                    parentSlug: slug,
+                    id: 2,
+                  },
+                },
+                data: {
+                  imgPath: "new-image-url.jpg",
+                },
+              },
+            ],
+            create: [
+              {
+                id: 2,
+                imgPath: "new-image-url.jpg",
+              },
+            ],
+            delete: [
+              {
+                parentSlug_id: {
+                  parentSlug: slug,
+                  id: 1,
+                },
+              },
+            ],
+          },
+        };
+        const formData = new FormData();
+        formData.append("image", selectedFile);
+        formData.append("slug", slug);
+
+        // Check if we're updating main image or another image
+        // Main image
+        formData.append("isMainImage", "true");
+
+        // Upload the file
+        const uploadResponse = await fetch("/api/auth/project/upload", {
+          method: "POST",
+          body: formData,
+        });
+
+        const uploadResult = await uploadResponse.json();
+
+        if (!uploadResponse.ok) {
+          throw new Error(uploadResult.error || "Upload failed");
+        }
+
+        // Update the project with the new main image path
+        const updateResult = await updateProject(slug, {
+          mainImage: uploadResult.filePath,
+        });
+
+        if (updateResult.success) {
+          console.log(
+            "Main image updated successfully:",
+            uploadResult.filePath
+          );
+        } else {
+          throw new Error(updateResult.error || "Failed to update project");
+        }
+      } catch (error) {
+        console.error("Error uploading file:", error);
+        setSaveError(error instanceof Error ? error.message : "Upload failed");
+      } finally {
+        setUploading(false);
+        setSelectedImageId(null);
+        // Reset the input
+        if (mainFileInputRef.current) {
+          mainFileInputRef.current.value = "";
         }
       }
     }
@@ -169,8 +329,15 @@ const projectUpdateObject: Prisma.ProjectUpdateInput = {
       <div className="space-y-4 fixed inset-0 w-full h-screen bg-black/60 z-20 flex items-center justify-center">
         <input
           type="file"
-          ref={fileInputRef}
-          onChange={handleFileSelect}
+          ref={mainFileInputRef}
+          onChange={handleMainFileSelect}
+          accept="image/*"
+          className="hidden"
+        />
+        <input
+          type="file"
+          ref={otherFileInputRef}
+          onChange={handleOtherFileSelect}
           accept="image/*"
           className="hidden"
         />
@@ -229,13 +396,6 @@ const projectUpdateObject: Prisma.ProjectUpdateInput = {
                     alt="Project image"
                     className="rounded-lg hover:border-4 hover:border-priml transition-all"
                   />
-                  <div className="absolute bottom-4 left-4 bg-priml px-3 py-1.5 rounded opacity-0 hover:opacity-100 transition-opacity">
-                    Bild ändern
-                  </div>
-                  {/* Show selected state */}
-                  {selectedImageId === img.id && (
-                    <div className="absolute inset-0 border-4 border-primd rounded-lg"></div>
-                  )}
                 </SwiperSlide>
               ))}
             </Swiper>
@@ -247,8 +407,8 @@ const projectUpdateObject: Prisma.ProjectUpdateInput = {
                 <button
                   onClick={() => {
                     setSelectedImageId(null);
-                    if (fileInputRef.current) {
-                      fileInputRef.current.click();
+                    if (mainFileInputRef.current) {
+                      mainFileInputRef.current.click();
                     }
                   }}
                   className="ml-4 px-3 py-1 bg-priml rounded hover:bg-primd"
@@ -258,7 +418,7 @@ const projectUpdateObject: Prisma.ProjectUpdateInput = {
               </div>
             )}
 
-            <div className="flex gap-2 mt-4">
+            <div className="flex gap-2 mt-4 w-full">
               <button
                 onClick={handleSave}
                 disabled={isSaving || uploading}
@@ -273,6 +433,75 @@ const projectUpdateObject: Prisma.ProjectUpdateInput = {
               >
                 Abbrechen
               </button>
+              <div className="flex w-full justify-end space-x-2">
+                <label
+                  className={`flex items-center px-4 py-2 border rounded cursor-pointer transition-all border-prim ${
+                    isActive === "add"
+                      ? "bg-prim text-white"
+                      : "text-prim  hover:bg-prim hover:text-white"
+                  } ${
+                    isSaving || uploading ? "opacity-50 cursor-not-allowed" : ""
+                  }`}
+                >
+                  <input
+                    type="radio"
+                    name="action"
+                    value="add"
+                    checked={isActive === "add"}
+                    onChange={() =>
+                      !(isSaving || uploading) && setActive("add")
+                    }
+                    disabled={isSaving || uploading}
+                    className="hidden"
+                  />
+                  Hinzufügen
+                </label>
+
+                <label
+                  className={`flex items-center px-4 py-2 border rounded cursor-pointer transition-all border-prim ${
+                    isActive === "edit"
+                      ? "bg-prim text-white"
+                      : "text-prim  hover:bg-prim hover:text-white"
+                  } ${
+                    isSaving || uploading ? "opacity-50 cursor-not-allowed" : ""
+                  }`}
+                >
+                  <input
+                    type="radio"
+                    name="action"
+                    value="edit"
+                    checked={isActive === "edit"}
+                    onChange={() =>
+                      !(isSaving || uploading) && setActive("edit")
+                    }
+                    disabled={isSaving || uploading}
+                    className="hidden"
+                  />
+                  Ändern
+                </label>
+                <label
+                  className={`flex items-center px-4 py-2 border rounded cursor-pointer transition-all border-red-500 ${
+                    isActive === "delete"
+                      ? "bg-red-500 text-white"
+                      : "text-red-500  hover:bg-red-500 hover:text-white"
+                  } ${
+                    isSaving || uploading ? "opacity-50 cursor-not-allowed" : ""
+                  }`}
+                >
+                  <input
+                    type="radio"
+                    name="action"
+                    value="delete"
+                    checked={isActive === "delete"}
+                    onChange={() =>
+                      !(isSaving || uploading) && setActive("delete")
+                    }
+                    disabled={isSaving || uploading}
+                    className="hidden"
+                  />
+                  Löschen
+                </label>
+              </div>
             </div>
           </div>
         </div>

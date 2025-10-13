@@ -8,6 +8,7 @@ export async function POST(request: NextRequest) {
     const formData = await request.formData();
     const file = formData.get('image') as File;
     const slug = formData.get('slug') as string;
+    const dbUpdate = formData.get('dbUpdate') as object;
     const isMainImage = formData.get('isMainImage') === 'true';
 
     if (!file || !slug) {
