@@ -8,8 +8,6 @@ export async function POST(request: NextRequest) {
     const formData = await request.formData();
     const file = formData.get('image') as File;
     const slug = formData.get('slug') as string;
-    const dbUpdate = formData.get('dbUpdate') as object;
-    const isMainImage = formData.get('isMainImage') === 'true';
 
     if (!file || !slug) {
       return NextResponse.json(
@@ -18,30 +16,22 @@ export async function POST(request: NextRequest) {
       );
     }
 
-    // Convert file to buffer
     const bytes = await file.arrayBuffer();
     const buffer = Buffer.from(bytes);
 
-    // Use a directory OUTSIDE of the Next.js build
-    // For development on Windows, you might want to use a different path
     const uploadsBaseDir = process.env.UPLOADS_DIR || path.join(process.cwd(), 'uploads');
     const projectDir = path.join(uploadsBaseDir, slug);
     
-    // Create directory if it doesn't exist
     if (!existsSync(projectDir)) {
       await mkdir(projectDir, { recursive: true });
     }
 
-    // Generate filename - keep original extension
     const fileExtension = path.extname(file.name);
-    const fileName = isMainImage ? `main${fileExtension}` : `${Date.now()}${fileExtension}`;
+    const fileName =  `main${fileExtension}`;
     const filePath = path.join(projectDir, fileName);
 
-    // Write file
     await writeFile(filePath, buffer);
 
-    // Return the path that will be used to serve the file
-    // This will be relative to your uploads serving route
     const dbPath = `${slug}/${fileName}`;
 
     return NextResponse.json({ 

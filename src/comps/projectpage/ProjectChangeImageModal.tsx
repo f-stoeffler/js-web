@@ -47,6 +47,9 @@ export default function ProjectChangeImageModal({
   const mainFileInputRef = useRef<HTMLInputElement>(null);
   const otherFileInputRef = useRef<HTMLInputElement>(null);
   const [selectedImageId, setSelectedImageId] = useState<number | null>(null);
+  const [selectedFiles, setSelectedFiles] = useState<Map<number, File>>(
+    new Map()
+  );
   const [isActive, setActive] = useState("add"); // or your default value
   const [projectUpdates, setProjectUpdates] = useState<
     Map<
@@ -93,132 +96,121 @@ export default function ProjectChangeImageModal({
 
   const handleOtherImageClick = (imageId: number) => {
     setSelectedImageId(imageId);
-    if (projectUpdates.get(imageId) != undefined) {
-      const projectUpdatesTemp = new Map(projectUpdates);
-      setProjectUpdates(
-        projectUpdatesTemp.set(imageId, updateTemplate(imageId, ""))
-      );
+    if (projectUpdates.get(imageId) == undefined) {
+      if (otherFileInputRef.current) {
+        otherFileInputRef.current.click();
+      }
     } else {
       projectUpdates.delete(imageId);
     }
     console.log("Clicked image ID:", imageId);
   };
 
-  const handleOtherFileSelect = async (
+  const handleOtherFileSelect = (
     event: React.ChangeEvent<HTMLInputElement>
   ) => {
     const files = event.target.files;
-    if (files && files.length > 0 && isAdmin) {
-      const selectedFile = files[0];
+    if (files && files.length > 0 && isAdmin && selectedImageId !== null) {
+      const selectedFilesTemp = new Map(selectedFiles);
+      setSelectedFiles(selectedFilesTemp.set(selectedImageId, files[0]));
+      const fileExtension = files[0].type.replace(/(.*)\//g, "");
+      const projectUpdatesTemp = new Map(projectUpdates);
+      setProjectUpdates(
+        projectUpdatesTemp.set(
+          selectedImageId,
+          updateTemplate(
+            selectedImageId,
+            `${slug}/${selectedImageId}.${fileExtension}`
+          )
+        )
+      );
+    }
+  };
 
-      setUploading(true);
-      setSaveError(null);
-
-      try {
-        // Create FormData for file upload
-        const projectUpdateObject: Prisma.ProjectUpdateInput = {
-          images: {
-            update: [
-              {
-                where: {
-                  parentSlug_id: {
-                    parentSlug: slug,
-                    id: 1,
-                  },
-                },
-                data: {
-                  imgPath: "new-image-url.jpg",
-                },
+  const handleOtherFileSave = async () => {
+    const projectUpdateObject: Prisma.ProjectUpdateInput = {
+      images: {
+        update: [
+          {
+            where: {
+              parentSlug_id: {
+                parentSlug: slug,
+                id: 1,
               },
-              {
-                where: {
-                  parentSlug_id: {
-                    parentSlug: slug,
-                    id: 2,
-                  },
-                },
-                data: {
-                  imgPath: "new-image-url.jpg",
-                },
-              },
-            ],
-            create: [
-              {
-                id: 2,
-                imgPath: "new-image-url.jpg",
-              },
-            ],
-            delete: [
-              {
-                parentSlug_id: {
-                  parentSlug: slug,
-                  id: 1,
-                },
-              },
-            ],
+            },
+            data: {
+              imgPath: "new-image-url.jpg",
+            },
           },
-        };
+          {
+            where: {
+              parentSlug_id: {
+                parentSlug: slug,
+                id: 2,
+              },
+            },
+            data: {
+              imgPath: "new-image-url.jpg",
+            },
+          },
+        ],
+        create: [
+          {
+            id: 2,
+            imgPath: "new-image-url.jpg",
+          },
+        ],
+        delete: [
+          {
+            parentSlug_id: {
+              parentSlug: slug,
+              id: 1,
+            },
+          },
+        ],
+      },
+    };
+    if (selectedFiles && isAdmin) {
+      console.log(selectedFiles.entries);
+      try {
+        const imageIDs: Array<number> = [];
         const formData = new FormData();
-        formData.append("image", selectedFile);
-        formData.append("slug", slug);
-        formData.append("dbUpdate", JSON.stringify(projectUpdates));
+        const apiReadyFiles = JSON.stringify(selectedFiles);
 
-        // Check if we're updating main image or another image
-        if (selectedImageId === null) {
-          // Main image
-          formData.append("isMainImage", "true");
-        } else {
-          // Other image - pass the image ID
-          formData.append("isMainImage", "false");
-          formData.append("imageId", selectedImageId.toString());
-        }
+        selectedFiles.forEach(function (value, key) {
+          formData.append(String(key), value);
+          imageIDs.push(key)
+        });
+        formData.append("imageIDs", JSON.stringify(imageIDs));
 
-        // Upload the file
-        const uploadResponse = await fetch("/api/auth/project/upload", {
-          method: "POST",
-          body: formData,
+        const projectUpdatesArray: Prisma.ProjectImageUpdateWithWhereUniqueWithoutParentRelationInput[] =
+          [];
+        projectUpdates.forEach(function (value, key) {
+          projectUpdatesArray.push(value);
         });
 
-        const uploadResult = await uploadResponse.json();
+        const dbUpdate: Prisma.ProjectUpdateInput = {
+          images: {
+            update: projectUpdatesArray,
+          },
+        };
 
-        if (!uploadResponse.ok) {
-          throw new Error(uploadResult.error || "Upload failed");
-        }
+        formData.append("dbUpdate", JSON.stringify(dbUpdate));
 
-        if (selectedImageId === null) {
-          // Update the project with the new main image path
-          const updateResult = await updateProject(slug, {
-            mainImage: uploadResult.filePath,
-          });
-
-          if (updateResult.success) {
-            console.log(
-              "Main image updated successfully:",
-              uploadResult.filePath
-            );
-          } else {
-            throw new Error(updateResult.error || "Failed to update project");
+        // Upload the file
+        const uploadResponse = await fetch(
+          "/api/auth/project/secondary-images/upload",
+          {
+            method: "POST",
+            body: formData,
           }
-        } else {
-          // Handle updating other images here
-          console.log(
-            "Other image update - ID:",
-            selectedImageId,
-            "Path:",
-            uploadResult.filePath
-          );
-          // You'll need to implement your API for updating other images
-        }
+        );
+
+
+
       } catch (error) {
         console.error("Error uploading file:", error);
         setSaveError(error instanceof Error ? error.message : "Upload failed");
-      } finally {
-        setUploading(false);
-        setSelectedImageId(null);
-        // Reset the input
-        if (mainFileInputRef.current) {
-          mainFileInputRef.current.value = "";
-        }
       }
     }
   };
@@ -234,62 +226,20 @@ export default function ProjectChangeImageModal({
       setSaveError(null);
 
       try {
-        // Create FormData for file upload
-        const projectUpdateObject: Prisma.ProjectUpdateInput = {
-          images: {
-            update: [
-              {
-                where: {
-                  parentSlug_id: {
-                    parentSlug: slug,
-                    id: 1,
-                  },
-                },
-                data: {
-                  imgPath: "new-image-url.jpg",
-                },
-              },
-              {
-                where: {
-                  parentSlug_id: {
-                    parentSlug: slug,
-                    id: 2,
-                  },
-                },
-                data: {
-                  imgPath: "new-image-url.jpg",
-                },
-              },
-            ],
-            create: [
-              {
-                id: 2,
-                imgPath: "new-image-url.jpg",
-              },
-            ],
-            delete: [
-              {
-                parentSlug_id: {
-                  parentSlug: slug,
-                  id: 1,
-                },
-              },
-            ],
-          },
-        };
         const formData = new FormData();
         formData.append("image", selectedFile);
         formData.append("slug", slug);
 
-        // Check if we're updating main image or another image
-        // Main image
         formData.append("isMainImage", "true");
 
         // Upload the file
-        const uploadResponse = await fetch("/api/auth/project/upload", {
-          method: "POST",
-          body: formData,
-        });
+        const uploadResponse = await fetch(
+          "/api/auth/project/main-image/upload",
+          {
+            method: "POST",
+            body: formData,
+          }
+        );
 
         const uploadResult = await uploadResponse.json();
 
@@ -368,7 +318,7 @@ export default function ProjectChangeImageModal({
             >
               <SwiperSlide className="relative">
                 <Image
-                  src={`/projects/${mainImg}`}
+                  src={`http://localhost:3000/api/project/${mainImg}`}
                   height={200}
                   width={300}
                   alt="Main project image"
@@ -420,7 +370,7 @@ export default function ProjectChangeImageModal({
 
             <div className="flex gap-2 mt-4 w-full">
               <button
-                onClick={handleSave}
+                onClick={handleOtherFileSave}
                 disabled={isSaving || uploading}
                 className="px-4 py-2 bg-prim text-white rounded disabled:opacity-50 disabled:cursor-not-allowed hover:bg-primd hover:cursor-pointer transition-all"
               >
