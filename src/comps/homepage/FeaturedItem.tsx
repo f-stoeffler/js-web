@@ -20,7 +20,7 @@ export default function FeaturedItem({
     <div  className="relative w-full h-86 xl:h-112 2xl:h-144 3xl:h-168 rounded-lg">
       <Link href={`/project/${slug}`}>
       <Image
-        src={`${process.env.WEBSITE_URL}/api/project/${img}?v=${imgVer}`}
+        src={`${process.env.NEXT_PUBLIC_WEBSITE_URL}/api/project/${img}?v=${imgVer}`}
         fill
         alt="flowers"
         className=" object-cover rounded-lg"

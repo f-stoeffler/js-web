@@ -10,7 +10,6 @@ import { checkIfUserIsAdmin } from "@/lib/auth";
 import { getFrontPage } from "@/lib/frontPage";
 import { getProjectsPageWithoutProjects } from "@/lib/projects";
 import {
-  getAchievements,
   getReviewsSectionWithoutReviews,
 } from "@/lib/reviews";
 import { getSkills } from "@/lib/skills";

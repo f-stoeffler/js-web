@@ -8,7 +8,6 @@ import ProjectsComp from "@/comps/homepage/Projects";
 import { getAllFeaturedProjects, getProjectsPageWithoutProjects } from "@/lib/projects";
 import HeaderHome from "@/comps/HeaderHome";
 import Footer from "@/comps/Footer";
-import EditFrontPage from "@/comps/admin-dashboard/EditFrontPage";
 
 export default async function Home() {
   const skills = await getSkills();

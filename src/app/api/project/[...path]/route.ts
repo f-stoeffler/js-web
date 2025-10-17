@@ -5,11 +5,12 @@ import path from 'path';
 
 export async function GET(
   request: NextRequest,
-  { params }: { params: { path: string[] } }
+  { params }: { params: Promise<{ path: string[] }> }
 ) {
   try {
     const paramPath = await params;
     const filePath = paramPath.path.join('/');
+    console.log(filePath)
 
     // Security check - prevent directory traversal
     if (filePath.includes('..') || filePath.includes('//')) {

@@ -1,8 +1,6 @@
 "use client";
-import { updateFrontPage } from "@/lib/frontPage";
-import { createProject } from "@/lib/projects";
 import { updateReviewsSection } from "@/lib/reviews";
-import { Achievements, FrontPage } from "@prisma/client";
+import { Achievements } from "@prisma/client";
 import { useState } from "react";
 
 export default function EditReviewsSection({

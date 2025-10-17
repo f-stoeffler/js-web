@@ -2,7 +2,7 @@ import { updateProjectsPagePart } from "@/lib/projects";
 import { Prisma } from "@prisma/client";
 import Image from "next/image";
 import Link from "next/link";
-import { Dispatch, SetStateAction, useEffect, useState } from "react";
+import { Dispatch, SetStateAction, useState } from "react";
 
 export default function ProjectComp({
   children,
@@ -147,7 +147,7 @@ export default function ProjectComp({
     >
       <div className="w-full h-56 xxs:h-80 xs:h-100 sm:h-64 relative">
         <Image
-          src={`${process.env.WEBSITE_URL}/api/project/${img}?v=${mainImageVer}`}
+          src={`${process.env.NEXT_PUBLIC_WEBSITE_URL}/api/project/${img}?v=${mainImageVer}`}
           fill
           alt="flowers"
           className="object-cover"

@@ -1,7 +1,7 @@
 "use client";
 
 import { useState, useRef, useEffect } from "react";
-import { getAllProjectImages, updateProject } from "@/lib/projects";
+import { getAllProjectImages } from "@/lib/projects";
 import { Prisma, ProjectImage } from "@prisma/client";
 import Image from "next/image";
 import { Swiper, SwiperSlide } from "swiper/react";
@@ -25,6 +25,7 @@ export default function ProjectChangeImageModal({
   mainImgVer: Date;
   title: string;
 }) {
+  /*
   const projectUpdateObject: Prisma.ProjectUpdateInput = {
     images: {
       update: [
@@ -66,7 +67,7 @@ export default function ProjectChangeImageModal({
         },
       ],
     },
-  };
+  };*/
 
   const updateTemplate: (
     imgIdVal: number,
@@ -479,7 +480,7 @@ export default function ProjectChangeImageModal({
                   }}
                 >
                   <Image
-                    src={`${process.env.WEBSITE_URL}/api/project/${img?.imgPath}?v=${img.updatedAt}`}
+                    src={`${process.env.NEXT_PUBLIC_WEBSITE_URL}/api/project/${img?.imgPath}?v=${img.updatedAt}`}
                     height={800}
                     width={800}
                     alt="Project image"

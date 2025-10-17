@@ -12,7 +12,7 @@ export default function ProjectImageSlideLarge({
   return (
     <div className="mx-auto max-h-svh p-2 lg:p-5 lg:max-w-7/8 flex justify-center">
       <Image
-        src={`${process.env.WEBSITE_URL}/api/project/${path}?v=${imageVer}`}
+        src={`${process.env.NEXT_PUBLIC_WEBSITE_URL}/api/project/${path}?v=${imageVer}`}
         height={1300}
         width={1300}
         alt="Project image"

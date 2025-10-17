@@ -1,7 +1,7 @@
 "use server";
 import { withAdminAuth } from "./auth";
 import prisma from "./prismaclient";
-import { Prisma, SkillItem } from "@prisma/client";
+import { Prisma } from "@prisma/client";
 
 const includeskillItems = {
   skillItems: true,

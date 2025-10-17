@@ -1,6 +1,5 @@
 "use client";
 import { updateFrontPage } from "@/lib/frontPage";
-import { createProject } from "@/lib/projects";
 import { FrontPage } from "@prisma/client";
 import { useState } from "react";
 

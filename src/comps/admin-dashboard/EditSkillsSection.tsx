@@ -1,9 +1,6 @@
 "use client";
-import { updateProjectsPagePart } from "@/lib/projects";
 import { SkillItem, Skills } from "@prisma/client";
 import { useState } from "react";
-import { FreeMode, Scrollbar } from "swiper/modules";
-import { Swiper, SwiperSlide } from "swiper/react";
 import "swiper/css";
 import "swiper/css/scrollbar";
 import {
