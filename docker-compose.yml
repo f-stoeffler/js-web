@@ -7,13 +7,10 @@ services:
     ports:
       - "3001:3001"
     environment:
-      - DATABASE_URL=file:/data/dev.db
-      - UPLOADS_DIR=/uploads
+      - DATABASE_URL=file:/srv/upload/js-web/prod.db
+      - UPLOADS_DIR=/srv/upload/js-web/project-images
       - ALLOWED_EMAILS=florianstoeffler1@gmail.com
     volumes:
-      - app-data:/srv/upload/js-web
-      - app-uploads:/srv/upload/js-web/project-images
+      - ./srv/upload/js-web:/srv/upload/js-web
 
-volumes:
-  app-data:
-  app-uploads:
+# Using a host bind mount for /srv/upload/js-web so files persist outside container

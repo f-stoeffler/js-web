@@ -13,15 +13,22 @@ RUN npx prisma generate
 
 COPY . .
 
-RUN mkdir -p /app-data /app-uploads && chown -R node:node /app-data /app-uploads
+# Create upload directories that will be mounted by docker-compose
+# Use the /srv/upload/js-web path so host volumes bind to where docker-compose expects
+RUN mkdir -p /srv/upload/js-web/project-images && chown -R node:node /srv/upload/js-web
 
-ENV DATABASE_URL="file:/app-data/prod.db"
-ENV UPLOADS_DIR=/app-uploads
+RUN npm run build
+ENV NODE_ENV production
 
-VOLUME /app-data
-VOLUME /app-uploads
+# Use paths under /srv/upload/js-web so they match docker-compose mounts
+ENV DATABASE_URL="file:/srv/upload/js-web/prod.db"
+ENV UPLOADS_DIR=/srv/upload/js-web/project-images
+
+VOLUME /srv/upload/js-web
+VOLUME /srv/upload/js-web/project-images
 
 EXPOSE 3001
+ENV PORT 3001
 USER node
 
-CMD ["npm", "start"]
+CMD ["npm", "run", "start:prod"]
