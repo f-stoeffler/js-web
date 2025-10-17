@@ -2,6 +2,7 @@
 import FeaturedSlide from "./homepage/FeaturedSlide";
 import { Prisma, Project } from "@prisma/client";
 import Header from "./Header";
+import Link from "next/link";
 
 export default async function HeaderHome({
   frontPage,
@@ -26,9 +27,9 @@ export default async function HeaderHome({
                     {frontPage?.title}
                   </h1>
                   <p className="text-center text-lg">{frontPage?.desc}</p>
-                  <button className="rounded-lg border-2 border-prim text-xl py-2 text-prim hover:bg-prim hover:text-fg transition-all cursor-pointer">
+                  <Link href={frontPage?.btnHref || "/"} className="rounded-lg border-2 border-prim text-xl py-2 text-prim hover:bg-prim hover:text-fg transition-all cursor-pointer text-center">
                     {frontPage?.btnText}
-                  </button>
+                  </Link>
                 </div>
               </div>
               <div>

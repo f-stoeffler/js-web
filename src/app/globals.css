@@ -161,6 +161,16 @@ body {
   /* Ensure image fits nicely */
   object-fit: contain;
 }
+.image-modal-swiper .swiper-slide div {
+  display: block;
+  
+  /* Fixed height, auto width to maintain aspect ratio */
+  height: 100%;
+  width: auto;
+  
+  /* Ensure image fits nicely */
+  object-fit: contain;
+}
 
 /* Remove the different width classes since we want consistent height */
 .image-modal-swiper .swiper-slide,

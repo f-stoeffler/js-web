@@ -15,6 +15,7 @@ model FrontPage {
   title           String
   desc            String
   btnText         String
+  btnHref         String @default("")
   featuredImages  featuredImage[]
 
   createdAt        DateTime           @default(now())
@@ -85,11 +86,13 @@ model Projects {
 
 model Project {
   slug            String @id
-  featured        Boolean
-  mainImage       String
+  featured        Boolean @default(false)
+  public          Boolean @default(false)
+  mainImage       String  @default("")
+  mainImageVer    DateTime  @default(now())
   title           String
   shortDesc       String
-  desc            String
+  desc            String @default("Keine Beschreibung")
   parent          String @default("Projects")
   parentRelation  Projects @relation(fields: [parent], references: [pagePart])
   images          ProjectImage[]

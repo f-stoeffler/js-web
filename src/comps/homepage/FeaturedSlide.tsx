@@ -15,7 +15,7 @@ export default function FeaturedSlide({
         spaceBetween={30} className="rounded-xl w-full"  >
       {featuredProjects?.map((project) => (
       <SwiperSlide key={project.slug}>
-        <FeaturedItem title={project.title} img={project.mainImage} slug={project.slug} >{project.shortDesc}</FeaturedItem>
+        <FeaturedItem title={project.title} img={project.mainImage} imgVer={project.mainImageVer} slug={project.slug} >{project.shortDesc}</FeaturedItem>
       </SwiperSlide>
       ))}
     </Swiper>

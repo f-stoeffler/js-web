@@ -1,0 +1,19 @@
+# docker-compose.yml
+version: '3.8'
+services:
+  app:
+    build: .
+    image: js-web
+    ports:
+      - "3001:3001"
+    environment:
+      - DATABASE_URL=file:/data/dev.db
+      - UPLOADS_DIR=/uploads
+      - ALLOWED_EMAILS=florianstoeffler1@gmail.com
+    volumes:
+      - app_data:/data
+      - app_uploads:/uploads
+
+volumes:
+  app_data:
+  app_uploads:

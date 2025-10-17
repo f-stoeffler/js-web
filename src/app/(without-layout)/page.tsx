@@ -5,15 +5,17 @@ import { getFrontPage } from "@/lib/frontPage";
 import { getAchievements } from "@/lib/reviews";
 import { getSkills } from "@/lib/skills";
 import ProjectsComp from "@/comps/homepage/Projects";
-import { getAllFeaturedProjects } from "@/lib/projects";
+import { getAllFeaturedProjects, getProjectsPageWithoutProjects } from "@/lib/projects";
 import HeaderHome from "@/comps/HeaderHome";
 import Footer from "@/comps/Footer";
+import EditFrontPage from "@/comps/admin-dashboard/EditFrontPage";
 
 export default async function Home() {
-  const skills = await getSkills("Skills");
-  const achievements = await getAchievements("Achievements");
-  const frontPage = await getFrontPage("FrontPage");
+  const skills = await getSkills();
+  const achievements = await getAchievements();
+  const frontPage = await getFrontPage();
   const featuredProjects = await getAllFeaturedProjects();
+  const projectsPagePart = await getProjectsPageWithoutProjects();
   return (
     <div className="">
       <HeaderHome featuredProjects={featuredProjects} frontPage={frontPage}/>
@@ -22,28 +24,28 @@ export default async function Home() {
           <div className="lg:container mx-auto lg:px-6">
             <Skills skills={skills?.skillItems} />
           </div>
-          <div className="bg-bg2 py-6 mt-20 border-y-2 border-prim">
+          {(achievements?.title !== "" && achievements?.title !== undefined) && <div className="bg-bg2 py-6 mt-20 border-y-2 border-prim">
             <div className=" container mx-auto px-4 sm:px-6">
               <div className="">
                 <div className="text-center mb-8">
                   <h1 className="font-bold text-5xl mb-2">
-                    {achievements?.title}
+                    {achievements.title}
                   </h1>
-                  <p>{achievements?.desc}</p>
+                  {(achievements?.desc !== "" && achievements?.desc !== undefined) && <p className="text-xl">{achievements.desc}</p>}
                 </div>
               </div>
             </div>
             <Reviews reviews={achievements?.reviews} />
-          </div>
+          </div>}
         </div>{" "}
-        <div className="sm:container mx-auto sm:px-6 mt-18">
+        <div className="sm:container mx-auto sm:px-6 mt-16" id="projects">
           <div className="">
             <div className="text-center mb-8 px-4 sm:px-0">
-              <h1 className="font-bold text-5xl mb-2  ">Portfolio</h1>
-              <p>{achievements?.desc}</p>
+              <h1 className="font-bold text-5xl mb-2  ">{projectsPagePart?.title}</h1>
+              {(projectsPagePart?.desc !== "" && projectsPagePart?.desc !== undefined) && <p className="text-xl">{projectsPagePart?.desc}</p>}
             </div>
           </div>
-          <ProjectsComp />
+          <ProjectsComp isAdmin={false} />
         </div>
       </main>
       <Footer />

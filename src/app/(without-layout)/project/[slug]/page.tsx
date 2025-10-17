@@ -22,7 +22,7 @@ export default async function ProjectPage({
   const { slug } = await params;
   const project = await getProject(slug);
 
-  if (project === null || project.slug === undefined) {
+  if (project === null || project?.slug === undefined || (project.public === false && isAdmin === false)) {
     return (
       <div className="h-svh flex flex-col">
         <Header />
@@ -49,6 +49,7 @@ export default async function ProjectPage({
                 <ProjectImagesSlide
                   imgs={project?.images}
                   mainImg={project?.mainImage}
+                  mainImageVer={project.mainImageVer}
                 />
               </div>
             </div>
@@ -60,11 +61,11 @@ export default async function ProjectPage({
                     <>
                       <ProjectDescEditor
                         isAdmin={isAdmin}
-                        initialDesc={project?.desc}
-                        slug={project?.slug}
-                        initialTitle={project?.title}
+                        initialDesc={project.desc}
+                        slug={project.slug}
+                        initialTitle={project.title}
                       />
-                      <ProjectChangeImageModal isAdmin={isAdmin} imgs={project.images} mainImg={project.mainImage} slug={project.slug} />
+                      <ProjectChangeImageModal isAdmin={isAdmin} imgs={project.images} mainImg={project.mainImage} slug={project.slug} mainImgVer={project.mainImageVer} title={project.title} />
                     </>
                   ) : (
                     <>

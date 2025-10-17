@@ -13,10 +13,12 @@ export default function ProjectImagesSlideLarge({
   imgs,
   mainImg,
   swiperRefLarge,
+  mainImageVer,
 }: Readonly<{
   mainImg: string | undefined;
   imgs: Array<ProjectImage> | undefined;
   swiperRefLarge: RefObject<SwiperType | null>;
+  mainImageVer: Date;
 }>) {
   return (
     <Swiper
@@ -35,11 +37,12 @@ export default function ProjectImagesSlideLarge({
       <SwiperSlide className="">
         <ProjectImageSlideLarge
           path={mainImg}
+          imageVer={mainImageVer}
         />
       </SwiperSlide>
       {imgs?.map((img) => (
         <SwiperSlide key={img.id} className="">
-          <ProjectImageSlideLarge path={img.imgPath} />
+          <ProjectImageSlideLarge path={img.imgPath} imageVer={img.updatedAt}  />
         </SwiperSlide>
       ))}
     </Swiper>

@@ -8,17 +8,19 @@ export default function FeaturedItem({
   title,
   img,
   slug,
+  imgVer,
 }: Readonly<{
   slug: string;
   img: string;
   children: React.ReactNode;
   title: string;
+  imgVer: Date;
 }>) {
   return (
     <div  className="relative w-full h-86 xl:h-112 2xl:h-144 3xl:h-168 rounded-lg">
       <Link href={`/project/${slug}`}>
       <Image
-        src={`/projects/${img}`}
+        src={`${process.env.WEBSITE_URL}/api/project/${img}?v=${imgVer}`}
         fill
         alt="flowers"
         className=" object-cover rounded-lg"

@@ -1,4 +1,5 @@
 "use server";
+import { checkIfUserIsAdmin, withAdminAuth } from "./auth";
 import prisma from "./prismaclient";
 import { Prisma } from "@prisma/client";
 
@@ -6,11 +7,21 @@ const includeFeaturedImages = {
   featuredImages: true,
 } satisfies Prisma.FrontPageInclude;
 
-export const createFrontPage = async (
+export const createFrontPage = withAdminAuth(async (
   frontPage: Prisma.FrontPageCreateInput
 ) => {
   return await prisma.frontPage.create({ data: frontPage });
-};
+})
+
+export const updateFrontPage = withAdminAuth(async (
+  frontPage: Prisma.FrontPageUpdateInput
+) => {
+  
+  return await prisma.frontPage.update({
+    where: { pagePart: "FrontPage" },
+    data: frontPage,
+  });
+})
 
 export const getAllFrontPages = async () => {
   return await prisma.frontPage.findMany({
@@ -18,13 +29,13 @@ export const getAllFrontPages = async () => {
   });
 };
 
-export const getFrontPage = async (pagePart: string) => {
+export const getFrontPage = async () => {
   return await prisma.frontPage.findUnique({
-    where: { pagePart: pagePart },
+    where: { pagePart: "FrontPage" },
     include: includeFeaturedImages,
   });
 };
 
-export const deleteFrontPage = async (pagePart: string) => {
+export const deleteFrontPage = withAdminAuth(async (pagePart: string) => {
   return await prisma.frontPage.delete({ where: { pagePart: pagePart } });
-};
+})

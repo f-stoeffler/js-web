@@ -12,12 +12,15 @@ export default function FullscreenImages({
   isOpen,
   onClose,
   swiperRefLarge,
+  mainImageVer,
+  
 }: Readonly<{
   mainImg: string | undefined;
   imgs: Array<ProjectImage> | undefined;
   swiperRefLarge: RefObject<SwiperType | null>;
   isOpen: boolean;
   onClose: () => void;
+  mainImageVer: Date;
 }>) {
   // Don't render anything if not open
   if (!isOpen) return null;
@@ -29,7 +32,8 @@ export default function FullscreenImages({
       <div 
         className="w-full h-screen p-5 flex items-center justify-center large-imgs"
       >
-        <ProjectImagesSlideLarge imgs={imgs} mainImg={mainImg} swiperRefLarge={swiperRefLarge}  />
+        <ProjectImagesSlideLarge imgs={imgs} mainImg={mainImg} swiperRefLarge={swiperRefLarge}
+            mainImageVer={mainImageVer}  />
         
         {/* Optional: Add a close button */}
         <button 

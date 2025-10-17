@@ -1,11 +1,12 @@
 "use client";
 
 import { useState, useEffect } from "react";
-import { Project } from "@prisma/client";
+import { Prisma, Project } from "@prisma/client";
 import ProjectComp from "./Project";
 import "bootstrap-icons/font/bootstrap-icons.css";
 
-export default function ProjectsComp() {
+export default function ProjectsComp({ isAdmin }: { isAdmin: boolean }) {
+
   const largePageSize = 8;
   const smallPageSize = 6;
 
@@ -14,6 +15,7 @@ export default function ProjectsComp() {
   const [pageSize, setPageSize] = useState(largePageSize);
   const [totalProjects, setTotalProjects] = useState(0);
   const [loading, setLoading] = useState(true);
+  const [manualRefresh, setManualRefresh] = useState(false);
 
   // Update pageSize based on window width (lg breakpoint: 1024px)
   useEffect(() => {
@@ -63,7 +65,7 @@ export default function ProjectsComp() {
 
   useEffect(() => {
     fetchProjects(currentPage);
-  }, [currentPage, pageSize]);
+  }, [currentPage, pageSize, manualRefresh]);
 
   const handlePageChange = (newPage: number) => {
     setCurrentPage(currentPage + newPage);
@@ -98,6 +100,12 @@ export default function ProjectsComp() {
                 title={project.title}
                 img={project.mainImage}
                 slug={project.slug}
+                isPublic={project.public}
+                isAdmin={isAdmin}
+                mainImageVer={project.mainImageVer}
+                setManualRefresh={setManualRefresh}
+                manualRefresh={manualRefresh}
+                featured={project.featured}
               >
                 {project.shortDesc}
               </ProjectComp>
@@ -115,9 +123,8 @@ export default function ProjectsComp() {
           </div>
         </div>
 
-          {/* Pagination */}
+        {/* Pagination */}
         <div className="flex items-center justify-center mt-3 mb-6 text-2xl">
-
           <div className="flex xl:hidden items-center justify-center mr-3">
             <button
               onClick={() => handlePageChange(-1)}
@@ -140,7 +147,7 @@ export default function ProjectsComp() {
             </button>
           </div>
         </div>
-          {/* Pagination End */}
+        {/* Pagination End */}
       </div>
     </div>
   );

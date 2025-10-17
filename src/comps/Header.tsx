@@ -2,8 +2,7 @@
 import Image from "next/image";
 import NavbarItem from "./NavbarItem";
 import Link from "next/link";
-import { authOptions, checkIfUserIsAdmin } from "@/lib/auth";
-import { getServerSession } from "next-auth";
+import { checkIfUserIsAdmin } from "@/lib/auth";
 
 export default async function Header() {
   const isAdmin = await checkIfUserIsAdmin();
@@ -19,10 +18,8 @@ export default async function Header() {
           <div className=" flex justify-center md:justify-end h-full w-full">
             {isAdmin && <><NavbarItem url="/api/auth/signout" isAdmin={true}>Adminmodus verlassen</NavbarItem>
               <NavbarItem url="/admin-dashboard" isAdmin={true}>Admin Dashboard</NavbarItem></>}
-            <NavbarItem url="#">Leistungen</NavbarItem>
-            <NavbarItem url="#">Kontakt</NavbarItem>
-            <NavbarItem url="#">Preise</NavbarItem>
-            <NavbarItem url="#">Musik</NavbarItem>
+            <NavbarItem url="/#projects">Leistungen</NavbarItem>
+            <NavbarItem url="mailto:julius.stoeffler@gmail.com">Kontakt</NavbarItem>
           </div>
         </div>
       </div>

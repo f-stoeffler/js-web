@@ -42,3 +42,26 @@ export async function checkIfUserIsAdmin() {
   if (!isAdmin) redirect("/api/auth/signout")
   return isAdmin;
 }
+
+export async function forceSignoutIfNotAdmin() {
+  const session = await getServerSession(authOptions);
+
+  if (!session) redirect("/unauthorized")
+
+  const ALLOWED_EMAILS = process.env.ALLOWED_EMAILS?.split(",") || [];
+  const isAdmin = session?.user?.email
+    ? ALLOWED_EMAILS.includes(session.user.email)
+    : false;
+  if (!isAdmin) redirect("/api/auth/signout")
+  return isAdmin;
+}
+
+// lib/auth-utils.ts
+export function withAdminAuth<Args extends unknown[], Return>(
+  fn: (...args: Args) => Promise<Return>
+) {
+  return async (...args: Args): Promise<Return> => {
+    await forceSignoutIfNotAdmin();
+    return fn(...args);
+  };
+}
