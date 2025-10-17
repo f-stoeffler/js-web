@@ -13,13 +13,13 @@ RUN npx prisma generate
 
 COPY . .
 
-RUN mkdir -p /data /uploads && chown -R node:node /data /uploads
+RUN mkdir -p /app-data /app-uploads && chown -R node:node /app-data /app-uploads
 
-ENV DATABASE_URL="file:/data/prod.db"
-ENV UPLOADS_DIR=/uploads
+ENV DATABASE_URL="file:/app-data/prod.db"
+ENV UPLOADS_DIR=/app-uploads
 
-VOLUME /data
-VOLUME /uploads
+VOLUME /app-data
+VOLUME /app-uploads
 
 EXPOSE 3001
 USER node
