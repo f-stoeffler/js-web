@@ -454,7 +454,7 @@ export default function ProjectChangeImageModal({
             >
               <SwiperSlide className="relative">
                 <Image
-                  src={`http://localhost:3000/api/project/${mainImgState}`}
+                  src={`${process.env.NEXT_PUBLIC_WEBSITE_URL}/api/project/${mainImgState}`}
                   height={800}
                   width={800}
                   alt="Main project image"
