@@ -4,7 +4,6 @@ WORKDIR /app
 
 COPY package*.json ./
 COPY prisma ./prisma/
-COPY --chown=nextjs:nodejs --from=builder /app/ ./
 
 RUN npm install
 
@@ -12,6 +11,7 @@ RUN npm install
 
 # RUN npx prisma db push  # Uncomment if you want auto-migration on build
 
+COPY --chown=nextjs:nodejs --from=builder /app/ ./
 COPY . .
 
 # Create upload directories that will be mounted by docker-compose
