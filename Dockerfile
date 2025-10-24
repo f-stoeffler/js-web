@@ -4,6 +4,7 @@ WORKDIR /app
 
 COPY package*.json ./
 COPY prisma ./prisma/
+COPY --chown=nextjs:nodejs --from=builder /app/ ./
 
 RUN npm install
 
