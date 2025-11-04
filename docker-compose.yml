@@ -9,7 +9,7 @@ services:
     environment:
       - DATABASE_URL=file:/srv/upload/js-web/prod.db
       - UPLOADS_DIR=/srv/upload/js-web/project-images
-      - ALLOWED_EMAILS=florianstoeffler1@gmail.com
+      - ALLOWED_EMAILS=florianstoeffler1@gmail.com,julius.stoeffler@gmail.com
     volumes:
       - ./srv/upload/js-web:/srv/upload/js-web
 
