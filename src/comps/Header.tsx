@@ -3,9 +3,11 @@ import Image from "next/image";
 import NavbarItem from "./NavbarItem";
 import Link from "next/link";
 import { checkIfUserIsAdmin } from "@/lib/auth";
+import { getHeader } from "@/lib/header";
 
 export default async function Header() {
   const isAdmin = await checkIfUserIsAdmin();
+  const header = await getHeader();
   return (
     <div className="w-full shadow-md border-b-2 border-prim">
       <div className="md:container mx-auto">
@@ -18,8 +20,9 @@ export default async function Header() {
           <div className=" flex justify-center md:justify-end h-full w-full">
             {isAdmin && <><NavbarItem url="/api/auth/signout" isAdmin={true}>Adminmodus verlassen</NavbarItem>
               <NavbarItem url="/admin-dashboard" isAdmin={true}>Admin Dashboard</NavbarItem></>}
-            <NavbarItem url="/#projects">Leistungen</NavbarItem>
-            <NavbarItem url="mailto:julius.stoeffler@gmail.com">Kontakt</NavbarItem>
+          {header?.navbarItems?.map((item) => (
+            <NavbarItem key={item.id} url={item.url}>{item.title}</NavbarItem>
+          ))}
           </div>
         </div>
       </div>

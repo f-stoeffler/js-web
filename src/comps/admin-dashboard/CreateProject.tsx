@@ -2,8 +2,9 @@
 import { createProject } from "@/lib/projects";
 import { useState } from "react";
 
-export default function CreateProjectComp() {
-  // {}: Readonly<{}>
+export default function CreateProjectComp({
+  className,
+}: Readonly<{ className: string }>) {
   const [projectTitle, setProjectTitle] = useState("");
   const [projectShortDesc, setProjectShortDesc] = useState("");
 
@@ -41,7 +42,7 @@ export default function CreateProjectComp() {
 
   return (
     <form
-      className="px-6 pb-6 pt-4 striped-background border-4 border-bg2 rounded-lg flex flex-col"
+      className={`px-6 pb-6 pt-4 striped-background border-4 border-bg2 rounded-lg flex flex-col ${className}`}
       action={handleCreateProject}
     >
       <h2 className="text-xl mb-4 font-bold">Projekt erstellen</h2>

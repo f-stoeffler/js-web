@@ -15,33 +15,33 @@ export default function Reviews({
 }: Readonly<{
   reviews: Array<Review> | undefined;
 }>) {
+  if (reviews)
   return (
     <Swiper
       modules={[Autoplay, FreeMode]}
       breakpoints={{
           0: {
+            loop: reviews.length > 1,
             slidesPerView: 1,
             spaceBetween: 8,
           },
           800: {
+            loop: reviews.length > 3,
             slidesPerView: 3,
             spaceBetween: 16,
           },
           1024: {
+            loop: reviews.length > 4,
             slidesPerView: 4,
             spaceBetween: 32,
-            slidesOffsetBefore: 70,
           },
           1500: {
+            loop: reviews.length > 5,
             slidesPerView: 5,
             spaceBetween: 32,
-            slidesOffsetBefore: 70,
           },
-        }}
-      shortSwipes={false}
-      loopPreventsSliding={false}
-      freeMode={true}
-      loop={true}
+      }}
+      centerInsufficientSlides={true}
       grabCursor={true}
       autoplay={{
         delay: 7000,
@@ -51,7 +51,7 @@ export default function Reviews({
       className="!px-6">
         
       {reviews?.map((review) => (
-      <SwiperSlide key={review.id}>
+      <SwiperSlide key={review.id} className=''>
         <ReviewComp title={review.title} >{review.desc}</ReviewComp>
       </SwiperSlide>
       ))}

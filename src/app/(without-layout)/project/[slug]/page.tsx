@@ -1,5 +1,5 @@
 "use server";
-import Footer from "@/comps/Footer";
+import FooterComp from "@/comps/Footer";
 import ProjectImagesSlide from "@/comps/projectpage/ProjectImagesSlide";
 import { getProject } from "@/lib/projects";
 import "swiper/css";
@@ -35,7 +35,7 @@ export default async function ProjectPage({
             </Link>
           </div>
         </div>
-        <Footer />
+        <FooterComp />
       </div>
     );
   } else {
@@ -79,7 +79,7 @@ export default async function ProjectPage({
               </div>
             </div>
           </div>
-          <Footer />
+          <FooterComp />
         </div>
       </div>
     );

@@ -2,10 +2,12 @@
 import prisma from "./prismaclient";
 import { Prisma } from "@prisma/client";
 import { checkIfUserIsAdmin, withAdminAuth } from "./auth";
+import path from "path";
+import { rm } from "fs/promises";
 
 const includeProjects = async () => {
   const isAdmin = await checkIfUserIsAdmin();
-  const whereCondition = isAdmin ? true : { where: { public: true } }
+  const whereCondition = isAdmin ? true : { where: { public: true } };
   return {
     projects: whereCondition,
   } satisfies Prisma.ProjectsInclude;
@@ -154,8 +156,15 @@ export const getAllFeaturedProjects = async () => {
 };
 
 export const deleteProject = withAdminAuth(async (slug: string) => {
-  return await prisma.project.delete({ where: { slug: slug } });
-})
+  const deletedProject = await prisma.project.delete({ where: { slug: slug } });
+  if (deletedProject) {
+    const uploadsBaseDir =
+      process.env.UPLOADS_DIR || path.join(process.cwd(), "uploads");
+    const projectDir = path.join(uploadsBaseDir, slug);
+    await rm(projectDir, { recursive: true, force: true });
+  }
+  return deletedProject;
+});
 
 export const getAllProjectImages = async (slug: string) => {
   return await prisma.projectImage.findMany({

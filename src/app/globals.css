@@ -2,14 +2,15 @@
 @plugin "@tailwindcss/typography";
 
 :root {
-  --bg: #ededed;
-  --bg2: #e4e4e4;
-  --fg: #0a0a0a;
-  --fg2: #0f0f0f;
+  --fg: #ededed;
+  --fg2: #e4e4e4;
+  --bg: #0a0a0a;
+  --bg2: #141414;
   --prim: #009be2;
   --primd: #0086c4;
   --priml: #00aeff;
   --sec: #f6ee1c;
+  --grayout: #555555;
 }
 
 .hoverdark:hover {
@@ -29,6 +30,7 @@
   --color-bg2: var(--bg2);
   --color-fg: var(--fg);
   --color-fg2: var(--fg2);
+  --color-grayout: var(--grayout);
 }
 /* 
 .prose h1 {
@@ -74,14 +76,6 @@
   --font-mono: var(--font-geist-mono);
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --bg: #0a0a0a;
-    --bg2: #141414;
-    --fg: #ededed;
-    --fg2: #e4e4e4;
-  }
-}
 
 body {
   background: var(--bg);

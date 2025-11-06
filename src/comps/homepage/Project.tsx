@@ -1,4 +1,4 @@
-import { updateProjectsPagePart } from "@/lib/projects";
+import { deleteProject, updateProjectsPagePart } from "@/lib/projects";
 import { Prisma } from "@prisma/client";
 import Image from "next/image";
 import Link from "next/link";
@@ -64,17 +64,6 @@ export default function ProjectComp({
     };
   };
 
-  const projectDeleteTemplate: (slug: string) => Prisma.ProjectsUpdateInput = (
-    slug
-  ) => {
-    return {
-      projects: {
-        delete: {
-          slug: slug,
-        },
-      },
-    };
-  };
 
   const handleDBUpdateFeatured = async (
     e: React.ChangeEvent<HTMLInputElement>
@@ -116,10 +105,8 @@ export default function ProjectComp({
 
   const handleDBUpdateDelete = async () => {
     try {
-      const updatedProjects = await updateProjectsPagePart(
-        projectDeleteTemplate(slug)
-      );
-      if (!updatedProjects.success) {
+      const updatedProjects = await deleteProject(slug);
+      if (!updatedProjects) {
         throw new Error("failed updating Project");
       }
     } catch (error) {
@@ -188,16 +175,22 @@ export default function ProjectComp({
                 </label>
               </div>
               <div className="grow flex justify-end">
-                <div className={`absolute w-21 h-10 ${deleteProtection === 2 && "hidden"}`}  onMouseEnter={handleDeleteProtectionEnter} onMouseLeave={handleDeleteProtectionLeave}>
+                <div
+                  className={`absolute w-21 h-10 ${
+                    deleteProtection === 2 && "hidden"
+                  }`}
+                  onMouseEnter={handleDeleteProtectionEnter}
+                  onMouseLeave={handleDeleteProtectionLeave}
+                >
                   <div
                     className={`h-full w-full bg-bg2/90 items-center justify-center rounded border-2 border-bg transition-all ${
                       deleteProtection === 1 ? "flex" : "hidden"
                     }`}
-                  onClick={(e) => {
-                    e.preventDefault();
-                    e.stopPropagation();
-                    setDeleteProtection(2);
-                  }}
+                    onClick={(e) => {
+                      e.preventDefault();
+                      e.stopPropagation();
+                      setDeleteProtection(2);
+                    }}
                   >
                     Schutz
                   </div>

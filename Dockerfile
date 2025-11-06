@@ -41,6 +41,7 @@ ENV UPLOADS_DIR=/srv/upload/js-web/project-images
 
 # Deploy migrations and build
 RUN npx prisma migrate deploy
+RUN npx prisma db seed
 RUN npm run build
 
 ENV NODE_ENV production
