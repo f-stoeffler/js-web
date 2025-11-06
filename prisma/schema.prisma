@@ -147,7 +147,7 @@ model FooterItem {
   id             Int    @id @default(autoincrement())
   text           String
   url            String
-  parent         String @default("Header")
+  parent         String @default("Footer")
   parentRelation Footer @relation(fields: [parent], references: [pagePart])
 
   createdAt DateTime @default(now())
