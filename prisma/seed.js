@@ -37,7 +37,7 @@ async function main() {
         pagePart: 'Footer',
         title: 'Your Website',
         bottomText: 'Copyright © 2024',
-        navbarItems: {
+        footerItems: {
           create: [
             { text: 'Imprint', url: '/imprint' },
             { text: 'Privacy', url: '/privacy' },
