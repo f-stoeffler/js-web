@@ -12,9 +12,13 @@ mkdir -p /app/.next/cache/images
 chown -R node:node /srv/upload/js-web || true
 chown -R node:node /app/.next/cache || true
 
-# Run Prisma migrations (deploy is suitable for production-like environments)
+# Run Prisma migrations
 echo "Running Prisma migrations..."
 npx prisma migrate deploy || echo "Prisma migrate deploy failed or no migrations to apply"
+
+# Seed the database only if it's empty
+echo "Database is empty, running seeds..."
+npx prisma db seed
 
 # Finally, start the app as the node user
 exec su-exec node "$@"
