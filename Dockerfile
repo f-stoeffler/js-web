@@ -34,7 +34,6 @@ RUN chmod +x /usr/local/bin/entrypoint.sh
 
 # Set volumes and environment
 VOLUME /srv/upload/js-web
-VOLUME /srv/upload/js-web/project-images
 
 ENV DATABASE_URL="file:/srv/upload/js-web/prod.db"
 ENV UPLOADS_DIR=/srv/upload/js-web/project-images

@@ -11,6 +11,6 @@ services:
       - UPLOADS_DIR=/srv/upload/js-web/project-images
       - ALLOWED_EMAILS=florianstoeffler1@gmail.com,julius.stoeffler@gmail.com
     volumes:
-      - ./srv/upload/js-web:/srv/upload/js-web
+      - /srv/upload/js-web:/srv/upload/js-web
 
 # Using a host bind mount for /srv/upload/js-web so files persist outside container
