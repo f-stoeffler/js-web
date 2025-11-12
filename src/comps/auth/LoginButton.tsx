@@ -7,7 +7,6 @@ export default async function LoginButton() {
   const session = await getServerSession(authOptions);
 
   if (session) {
-    console.log('✅ User is authenticated:', session.user);
     return (
       <div className="striped-background p-4 rounded-lg shadow-lg">
         <p className="text-sm mb-2">Angemeldet als {session.user?.email}</p>
@@ -21,7 +20,6 @@ export default async function LoginButton() {
     );
   }
 
-  console.log('❌ User is not authenticated');
   return (
     <div className="striped-background">
       <Link 

@@ -3,7 +3,7 @@ import { NavbarItem } from "@prisma/client";
 import { useState } from "react";
 import "swiper/css";
 import "swiper/css/scrollbar";
-import { createNavbarItem, deleteNavbarItem, getHeader, getNavbarItem, updateNavbarItem } from "@/lib/header";
+import { createNavbarItem, deleteNavbarItem, getHeader, updateNavbarItem } from "@/lib/header";
 
 export default function EditNavbarItems({
   data,
@@ -32,7 +32,7 @@ export default function EditNavbarItems({
       const newHeader = await getHeader()
       setNavbarItems(newHeader?.navbarItems);
     } catch (error) {
-      console.log(error);
+      console.error(error);
     }
   };
 
@@ -42,7 +42,7 @@ export default function EditNavbarItems({
       const newHeader = await getHeader()
       setNavbarItems(newHeader?.navbarItems);
     } catch (error) {
-      console.log(error);
+      console.error(error);
     }
   };
 

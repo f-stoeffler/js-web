@@ -8,7 +8,6 @@ export default function ProjectComp({
   children,
   title,
   slug,
-  img,
   isPublic,
   featured,
   isAdmin,
@@ -19,7 +18,6 @@ export default function ProjectComp({
   children: React.ReactNode;
   title: string;
   slug: string;
-  img: string;
   isPublic: boolean;
   featured: boolean;
   isAdmin: boolean;
@@ -134,7 +132,7 @@ export default function ProjectComp({
     >
       <div className="w-full h-56 xxs:h-80 xs:h-100 sm:h-64 relative">
         <Image
-          src={`${process.env.NEXT_PUBLIC_WEBSITE_URL}/api/project/${img}?v=${mainImageVer}`}
+          src={`${process.env.NEXT_PUBLIC_WEBSITE_URL}/api/project/${slug}/thumbnail.jpeg?v=${mainImageVer}`}
           fill
           alt="flowers"
           className="object-cover"

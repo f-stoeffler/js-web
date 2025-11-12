@@ -3,6 +3,7 @@ import { writeFile, mkdir, readdir, unlink } from "fs/promises";
 import { existsSync } from "fs";
 import path from "path";
 import { updateProject } from "@/lib/projects";
+import sharp from "sharp";
 
 export async function POST(request: NextRequest) {
   try {
@@ -17,8 +18,38 @@ export async function POST(request: NextRequest) {
       );
     }
 
+    const allowedTypes = [
+      "image/jpeg",
+      "image/png",
+      "image/webp",
+      "image/avif",
+    ];
+    if (!allowedTypes.includes(image.type)) {
+      return NextResponse.json(
+        {
+          error:
+            "Invalid image type. Only JPEG, PNG, WebP, and AVIF are allowed.",
+        },
+        { status: 400 }
+      );
+    }
+
     const bytes = await image.arrayBuffer();
     const buffer = Buffer.from(bytes);
+
+    const bufferMainImage = await sharp(buffer)
+      .jpeg()
+      .toBuffer();
+
+    const thumbnailImage = await sharp(buffer)
+      .resize({
+        width: 600, // Max width for modern displays
+        withoutEnlargement: true, // Don't enlarge small images
+      })
+      .jpeg({ 
+        quality: 80, // Good balance of quality and size
+      })
+      .toBuffer();
 
     const uploadsBaseDir =
       process.env.UPLOADS_DIR || path.join(process.cwd(), "uploads");
@@ -30,23 +61,23 @@ export async function POST(request: NextRequest) {
       try {
         const files = await readdir(projectDir);
         for (const file of files) {
-          if (file.startsWith("main.")) {
+          if (file.startsWith("main.") || file.startsWith("thumbnail.")) {
             const existingFilePath = path.join(projectDir, file);
             await unlink(existingFilePath);
-            console.log(`Removed existing file: ${existingFilePath}`);
           }
         }
       } catch (error) {
         // If readdir fails (e.g., directory doesn't exist), we can continue
-        console.log("No existing files to remove or directory not accessible");
+        console.error("No existing files to remove or directory not accessible: " + error);
       }
     }
 
-    const fileExtension = path.extname(image.name);
-    const fileName = `main${fileExtension}`;
+    const fileName = `main.jpeg`;
     const filePath = path.join(projectDir, fileName);
+    const thumbnailPath = path.join(projectDir, `thumbnail.jpeg`);
 
-    await writeFile(filePath, buffer);
+    await writeFile(filePath, bufferMainImage);
+    await writeFile(thumbnailPath, thumbnailImage);
 
     const dbPath = `${slug}/${fileName}`;
 
@@ -55,7 +86,6 @@ export async function POST(request: NextRequest) {
       mainImage: dbPath,
       mainImageVer: mainImageVer,
     });
-    console.log(mainImageVer)
 
     if (!updateResult.success) {
       throw new Error(updateResult.error || "Failed to update project");

@@ -18,7 +18,6 @@ export default async function ProjectPage({
   params: Promise<{ slug: string }>;
 }) {
   const isAdmin = await checkIfUserIsAdmin();
-  console.log(isAdmin);
   const { slug } = await params;
   const project = await getProject(slug);
 

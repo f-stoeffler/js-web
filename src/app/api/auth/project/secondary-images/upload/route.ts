@@ -4,6 +4,7 @@ import { existsSync } from "fs";
 import path from "path";
 import { updateProject } from "@/lib/projects";
 import { Prisma } from "@prisma/client";
+import sharp from "sharp";
 
 export async function POST(request: NextRequest) {
   try {
@@ -25,7 +26,6 @@ export async function POST(request: NextRequest) {
       await mkdir(projectDir, { recursive: true });
     } else {
       if (mode === "update" || mode === "delete") {
-        console.log(`going into delete`);
         imageIDs.forEach(async function (imageID) {
           try {
             const files = await readdir(projectDir);
@@ -33,13 +33,12 @@ export async function POST(request: NextRequest) {
               if (file.startsWith(`${imageID}.`)) {
                 const existingFilePath = path.join(projectDir, file);
                 await unlink(existingFilePath);
-                console.log(`Removed existing file: ${existingFilePath}`);
               }
             }
           } catch (error) {
             // If readdir fails (e.g., directory doesn't exist), we can continue
-            console.log(
-              "No existing files to remove or directory not accessible"
+            console.error(
+              "No existing files to remove or directory not accessible: " + error
             );
           }
         });
@@ -53,14 +52,12 @@ export async function POST(request: NextRequest) {
         const bytes = await image.arrayBuffer();
         const buffer = Buffer.from(bytes);
 
-        let fileExtension = path.extname(image.name);
-        if (fileExtension === ".jpg") {
-          fileExtension = ".jpeg";
-        }
-        const fileName = `${imageID}${fileExtension}`;
+        const bufferOtherImage = await sharp(buffer).jpeg().toBuffer();
+        
+        const fileName = `${imageID}.jpeg`;
         const filePath = path.join(projectDir, fileName);
 
-        await writeFile(filePath, buffer);
+        await writeFile(filePath, bufferOtherImage);
       });
     }
 
