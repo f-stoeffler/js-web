@@ -231,7 +231,6 @@ export default function ProjectChangeImageModal({
       isAdmin &&
       (selectedImageId !== null || mode === "create")
     ) {
-
       // if in update mode, add image to selected images
       if (mode === "update" && selectedImageId !== null) {
         const dbPath = `${slug}/${selectedImageId}.jpeg`;
@@ -343,7 +342,10 @@ export default function ProjectChangeImageModal({
         console.error("Error uploading file:", error);
         setSaveError(error instanceof Error ? error.message : "Upload failed");
       } finally {
-        setImgsState(await getAllProjectImages(slug));
+        setTimeout(
+          async () => setImgsState(await getAllProjectImages(slug)),
+          2000
+        );
       }
     }
   };
@@ -380,7 +382,9 @@ export default function ProjectChangeImageModal({
           throw new Error(uploadResult.error || "Upload failed");
         }
 
-        setMainImgState(`${uploadResult.mainImage}?v=${uploadResult.mainImageVer}`);
+        setMainImgState(
+          `${uploadResult.mainImage}?v=${uploadResult.mainImageVer}`
+        );
       } catch (error) {
         console.error("Error uploading file:", error);
         setSaveError(error instanceof Error ? error.message : "Upload failed");
@@ -505,11 +509,15 @@ export default function ProjectChangeImageModal({
               <div className="flex items-center gap-2.5">
                 <button
                   onClick={handleOtherFileSave}
-                  disabled={isSaving || uploading || !(
+                  disabled={
+                    isSaving ||
+                    uploading ||
+                    !(
                       projectImagesUpdate.size > 0 ||
                       projectImagesCreate.size > 0 ||
                       projectImagesDelete.size > 0
-                    )}
+                    )
+                  }
                   className="px-4 py-2 bg-prim text-white rounded disabled:opacity-50 disabled:cursor-not-allowed hover:bg-primd hover:cursor-pointer transition-all"
                 >
                   {isSaving ? "Speichern..." : "Speichern"}

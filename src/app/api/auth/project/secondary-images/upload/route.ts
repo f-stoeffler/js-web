@@ -1,6 +1,5 @@
 import { NextRequest, NextResponse } from "next/server";
-import { writeFile, mkdir, readdir, unlink } from "fs/promises";
-import { existsSync } from "fs";
+import { writeFile, readdir, unlink } from "fs/promises";
 import path from "path";
 import { updateProject } from "@/lib/projects";
 import { Prisma } from "@prisma/client";
@@ -22,27 +21,23 @@ export async function POST(request: NextRequest) {
       process.env.UPLOADS_DIR || path.join(process.cwd(), "uploads");
     const projectDir = path.join(uploadsBaseDir, slug);
 
-    if (!existsSync(projectDir)) {
-      await mkdir(projectDir, { recursive: true });
-    } else {
-      if (mode === "update" || mode === "delete") {
-        imageIDs.forEach(async function (imageID) {
-          try {
-            const files = await readdir(projectDir);
-            for (const file of files) {
-              if (file.startsWith(`${imageID}.`)) {
-                const existingFilePath = path.join(projectDir, file);
-                await unlink(existingFilePath);
-              }
+    if (mode === "delete") {
+      imageIDs.forEach(async function (imageID) {
+        try {
+          const files = await readdir(projectDir);
+          for (const file of files) {
+            if (file.startsWith(`${imageID}.`)) {
+              const existingFilePath = path.join(projectDir, file);
+              await unlink(existingFilePath);
             }
-          } catch (error) {
-            // If readdir fails (e.g., directory doesn't exist), we can continue
-            console.error(
-              "No existing files to remove or directory not accessible: " + error
-            );
           }
-        });
-      }
+        } catch (error) {
+          // If readdir fails (e.g., directory doesn't exist), we can continue
+          console.error(
+            "No existing files to remove or directory not accessible: " + error
+          );
+        }
+      });
     }
 
     if (mode === "update" || mode === "create") {
@@ -53,7 +48,7 @@ export async function POST(request: NextRequest) {
         const buffer = Buffer.from(bytes);
 
         const bufferOtherImage = await sharp(buffer).jpeg().toBuffer();
-        
+
         const fileName = `${imageID}.jpeg`;
         const filePath = path.join(projectDir, fileName);
 

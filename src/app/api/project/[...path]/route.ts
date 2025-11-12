@@ -1,6 +1,5 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { readFile } from 'fs/promises';
-import { exists, existsSync } from 'fs';
 import path from 'path';
 
 export async function GET(

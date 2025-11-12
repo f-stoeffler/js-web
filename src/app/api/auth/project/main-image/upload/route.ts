@@ -55,23 +55,6 @@ export async function POST(request: NextRequest) {
       process.env.UPLOADS_DIR || path.join(process.cwd(), "uploads");
     const projectDir = path.join(uploadsBaseDir, slug);
 
-    if (!existsSync(projectDir)) {
-      await mkdir(projectDir, { recursive: true });
-    } else {
-      try {
-        const files = await readdir(projectDir);
-        for (const file of files) {
-          if (file.startsWith("main.") || file.startsWith("thumbnail.")) {
-            const existingFilePath = path.join(projectDir, file);
-            await unlink(existingFilePath);
-          }
-        }
-      } catch (error) {
-        // If readdir fails (e.g., directory doesn't exist), we can continue
-        console.error("No existing files to remove or directory not accessible: " + error);
-      }
-    }
-
     const fileName = `main.jpeg`;
     const filePath = path.join(projectDir, fileName);
     const thumbnailPath = path.join(projectDir, `thumbnail.jpeg`);
