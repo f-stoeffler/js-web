@@ -7,6 +7,7 @@ export default function CreateProjectComp({
 }: Readonly<{ className: string }>) {
   const [projectTitle, setProjectTitle] = useState("");
   const [projectShortDesc, setProjectShortDesc] = useState("");
+  const [error, setError] = useState("");
 
   const handleCreateProject = async () => {
     try {
@@ -16,7 +17,8 @@ export default function CreateProjectComp({
         slug: slugify(projectTitle),
       });
       if (!createdProject.success) {
-        throw new Error("failed updating Project");
+        setError("Fehler beim erstellen des Projekts. Entweder existiert dieser Titel/Slug bereits oder dies ist ein Server-interner Fehler.")
+        throw new Error("failed creating Project");
       }
       window.location.reload();
     } catch (error) {
@@ -89,6 +91,7 @@ export default function CreateProjectComp({
           />
         </div>
       </div>
+      {error && <div className="text-red-400">{error}</div>}
       <div className="flex flex-col grow justify-end">
         <input
           type="submit"

@@ -30,7 +30,7 @@ export const createProject = withAdminAuth(
       return { success: true, project: newProject };
     } catch (error) {
       console.error("Error updating project:", error);
-      return { success: false, error: "Failed to update project" };
+      return { success: false, error: "Failed to update project: " + error };
     }
   }
 );

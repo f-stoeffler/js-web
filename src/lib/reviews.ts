@@ -1,5 +1,5 @@
 "use server";
-import { checkIfUserIsAdmin, withAdminAuth } from "./auth";
+import { withAdminAuth } from "./auth";
 import prisma from "./prismaclient";
 import { Prisma } from "@prisma/client";
 

@@ -6,12 +6,17 @@ import ProjectComp from "./Project";
 import "bootstrap-icons/font/bootstrap-icons.css";
 
 export default function ProjectsComp({ isAdmin }: { isAdmin: boolean }) {
-
   const largePageSize = 8;
   const smallPageSize = 6;
 
   const [projects, setProjects] = useState<Project[]>([]);
-  const [currentPage, setCurrentPage] = useState(1);
+  const [currentPage, setCurrentPage] = useState(() => {
+    if (typeof window !== "undefined") {
+      const savedPage = sessionStorage.getItem("projectsCurrentPage");
+      return savedPage ? parseInt(savedPage) : 1;
+    }
+    return 1;
+  });
   const [pageSize, setPageSize] = useState(largePageSize);
   const [totalProjects, setTotalProjects] = useState(0);
   const [loading, setLoading] = useState(true);
@@ -64,6 +69,7 @@ export default function ProjectsComp({ isAdmin }: { isAdmin: boolean }) {
 
   useEffect(() => {
     fetchProjects(currentPage);
+    sessionStorage.setItem("projectsCurrentPage", currentPage.toString());
   }, [currentPage, pageSize, manualRefresh]);
 
   const handlePageChange = (newPage: number) => {
@@ -72,7 +78,7 @@ export default function ProjectsComp({ isAdmin }: { isAdmin: boolean }) {
 
   if (loading) {
     return (
-      <div className="h-80 flex items-center justify-center">
+      <div className="h-180 flex items-center justify-center">
         <div className="text-xl">Projekte werden geladen...</div>
       </div>
     );
