@@ -1,6 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { readFile } from 'fs/promises';
-import { existsSync } from 'fs';
+import { exists, existsSync } from 'fs';
 import path from 'path';
 
 export async function GET(
@@ -18,11 +18,6 @@ export async function GET(
 
     const uploadsBaseDir = process.env.UPLOADS_DIR || path.join(process.cwd(), 'uploads');
     const fullPath = path.join(uploadsBaseDir, filePath);
-
-    // Check if file exists
-    if (!existsSync(fullPath)) {
-      return NextResponse.json({ error: 'File not found' }, { status: 404 });
-    }
 
     // Read the file as buffer (no encoding = binary)
     const fileBuffer = await readFile(fullPath);
@@ -45,7 +40,7 @@ export async function GET(
 
   } catch (error) {
     console.error('File serve error:', error);
-    return NextResponse.json({ error: 'Failed to serve file' }, { status: 500 });
+    return NextResponse.json({ error: 'Failed to serve file: ' + error }, { status: 500 });
   }
 }
 
