@@ -32,7 +32,7 @@ export default function EditReviews({
       const newReviews = await getReviews();
       setReviews(newReviews?.reviews);
     } catch (error) {
-      console.log(error);
+      console.error(error);
     }
   };
 
@@ -42,7 +42,7 @@ export default function EditReviews({
       const newReviews = await getReviews();
       setReviews(newReviews?.reviews);
     } catch (error) {
-      console.log(error);
+      console.error(error);
     }
   };
 

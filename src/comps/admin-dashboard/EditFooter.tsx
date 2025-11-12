@@ -1,6 +1,6 @@
 "use client";
 import { updateFooter } from "@/lib/footer";
-import { Footer, Prisma } from "@prisma/client";
+import { Footer } from "@prisma/client";
 import { useState } from "react";
 
 export default function EditFooter({

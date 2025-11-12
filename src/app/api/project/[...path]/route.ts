@@ -10,7 +10,6 @@ export async function GET(
   try {
     const paramPath = await params;
     const filePath = paramPath.path.join('/');
-    console.log(filePath)
 
     // Security check - prevent directory traversal
     if (filePath.includes('..') || filePath.includes('//')) {
@@ -19,8 +18,6 @@ export async function GET(
 
     const uploadsBaseDir = process.env.UPLOADS_DIR || path.join(process.cwd(), 'uploads');
     const fullPath = path.join(uploadsBaseDir, filePath);
-
-    console.log(`uploadsBaseDir: ${uploadsBaseDir} \nfilePath: ${filePath}\nfullPath: ${fullPath}`)
 
     // Check if file exists
     if (!existsSync(fullPath)) {

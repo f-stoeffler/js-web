@@ -9,7 +9,7 @@ export default async function AuthStatus() {
   if (session) {
     console.log('✅ User is authenticated:', session.user);
   } else {
-    console.log('❌ User is not authenticated');
+    console.error('❌ User is not authenticated');
   }
 
   return <LoginButton />;

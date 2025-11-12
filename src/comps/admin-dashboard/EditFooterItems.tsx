@@ -39,7 +39,7 @@ export default function EditFooterItems({
       const newFooter = await getFooter();
       setFooterItems(newFooter?.footerItems);
     } catch (error) {
-      console.log(error);
+      console.error(error);
     }
   };
 
@@ -49,7 +49,7 @@ export default function EditFooterItems({
       const newFooter = await getFooter();
       setFooterItems(newFooter?.footerItems);
     } catch (error) {
-      console.log(error);
+      console.error(error);
     }
   };
 

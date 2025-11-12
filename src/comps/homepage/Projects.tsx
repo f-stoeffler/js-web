@@ -53,7 +53,6 @@ export default function ProjectsComp({ isAdmin }: { isAdmin: boolean }) {
       }
 
       const data = await response.json();
-      console.log(data);
       setProjects(data[0]);
       setTotalProjects(data[1]);
     } catch (error) {
@@ -98,7 +97,6 @@ export default function ProjectsComp({ isAdmin }: { isAdmin: boolean }) {
               <ProjectComp
                 key={project.slug}
                 title={project.title}
-                img={project.mainImage}
                 slug={project.slug}
                 isPublic={project.public}
                 isAdmin={isAdmin}

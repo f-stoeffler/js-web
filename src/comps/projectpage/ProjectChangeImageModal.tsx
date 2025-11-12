@@ -118,7 +118,6 @@ export default function ProjectChangeImageModal({
     } else {
       determinedHighestId = -1;
     }
-    console.log("Höchste ID: " + determinedHighestId);
     return determinedHighestId;
   };
 
@@ -232,11 +231,10 @@ export default function ProjectChangeImageModal({
       isAdmin &&
       (selectedImageId !== null || mode === "create")
     ) {
-      const fileExtension = files[0].type.replace(/(.*)\//g, "");
 
       // if in update mode, add image to selected images
       if (mode === "update" && selectedImageId !== null) {
-        const dbPath = `${slug}/${selectedImageId}.${fileExtension}`;
+        const dbPath = `${slug}/${selectedImageId}.jpeg`;
         const selectedFilesTemp = new Map(selectedFiles);
         setSelectedFiles(selectedFilesTemp.set(selectedImageId, files[0]));
         const projectUpdatesTemp = new Map(projectImagesUpdate);
@@ -247,7 +245,7 @@ export default function ProjectChangeImageModal({
           )
         );
       } else if (mode === "create") {
-        const dbPath = `${slug}/${createImgId}.${fileExtension}`;
+        const dbPath = `${slug}/${createImgId}.jpeg`;
         const selectedFilesTemp = new Map(selectedFiles);
         setSelectedFiles(selectedFilesTemp.set(createImgId, files[0]));
         const projectCreateTemp = new Map(projectImagesCreate);
@@ -264,7 +262,6 @@ export default function ProjectChangeImageModal({
 
   const handleOtherFileSave = async () => {
     if (selectedFiles && isAdmin) {
-      console.log(selectedFiles.entries);
       try {
         const imageIDs: Array<number> = [];
         const formData = new FormData();
@@ -326,7 +323,6 @@ export default function ProjectChangeImageModal({
           };
         }
 
-        console.log(JSON.stringify(dbUpdate));
         formData.append("dbUpdate", JSON.stringify(dbUpdate));
 
         // Upload the file
@@ -385,7 +381,6 @@ export default function ProjectChangeImageModal({
         }
 
         setMainImgState(`${uploadResult.mainImage}?v=${uploadResult.mainImageVer}`);
-        console.log(uploadResult.mainImageVer);
       } catch (error) {
         console.error("Error uploading file:", error);
         setSaveError(error instanceof Error ? error.message : "Upload failed");
@@ -407,14 +402,14 @@ export default function ProjectChangeImageModal({
           type="file"
           ref={mainFileInputRef}
           onChange={handleMainFileSelect}
-          accept="image/*"
+          accept="image/png, image/jpeg, image/avif, image/webp"
           className="hidden"
         />
         <input
           type="file"
           ref={otherFileInputRef}
           onChange={handleOtherFileSelect}
-          accept="image/*"
+          accept="image/png, image/jpeg, image/avif, image/webp"
           className="hidden"
         />
 

@@ -43,7 +43,7 @@ export default function EditSkillsSection({
       const newSkillItems = await getSkills();
       setSkillItems(newSkillItems?.skillItems);
     } catch (error) {
-      console.log(error);
+      console.error(error);
     }
   };
 
@@ -53,7 +53,7 @@ export default function EditSkillsSection({
       const newSkillItems = await getSkills();
       setSkillItems(newSkillItems?.skillItems);
     } catch (error) {
-      console.log(error);
+      console.error(error);
     }
   };
 
