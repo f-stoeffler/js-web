@@ -15,6 +15,7 @@ import { useState } from "react";
 import Markdown from "react-markdown";
 import { updateProject } from "@/lib/projects";
 import ProjectTitle from "./ProjectTitle";
+import rehypeRaw from "rehype-raw";
 
 export default function ProjectDescEditor({
   initialDesc,
@@ -121,7 +122,7 @@ export default function ProjectDescEditor({
     <div className="relative">
       <ProjectTitle title={newTitle} />
       <div className="prose prose-lg 1.5xl:prose-xl 2xl:prose-2xl dark:prose-invert max-w-none single-break">
-        <Markdown>{newDesc}</Markdown>
+        <Markdown rehypePlugins={[rehypeRaw]}>{newDesc}</Markdown>
       </div>
       <button
         onClick={() => setEditing(true)}

@@ -11,6 +11,7 @@ import ProjectDescEditor from "@/comps/projectpage/ProjectDescEditor";
 import Link from "next/link";
 import ProjectTitle from "@/comps/projectpage/ProjectTitle";
 import ProjectChangeImageModal from "@/comps/projectpage/ProjectChangeImageModal";
+import rehypeRaw from "rehype-raw";
 
 export default async function ProjectPage({
   params,
@@ -70,7 +71,7 @@ export default async function ProjectPage({
                     <>
                       <ProjectTitle title={project.title} />
                       <div className="prose prose-lg 1.5xl:prose-xl 2xl:prose-2xl dark:prose-invert max-w-none single-break">
-                        <Markdown>{project.desc}</Markdown>
+                        <Markdown rehypePlugins={[rehypeRaw]}>{project.desc}</Markdown>
                       </div>
                     </>
                   )}
