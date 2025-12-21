@@ -1,4 +1,4 @@
-FROM node:18-alpine
+FROM node:22-alpine
 
 # Create the nextjs user and group first
 RUN addgroup -g 1001 -S nodejs && \
