@@ -44,4 +44,7 @@ next-env.d.ts
 
 /generated/prisma
 
-/prisma/dev.db
+/prisma/
+
+!/prisma/schema.prisma
+!/prisma/seed.js
